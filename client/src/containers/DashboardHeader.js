@@ -28,21 +28,15 @@ class DashboardHeader extends Component {
     });  
   }
 
-  logoutUser = async () => {
-    this.setState({user: null});
-    await this.props.signout();
-    await this.props.history.push('/');
-  }
-
   render () {
     if(!this.state.user) {
-      return <div>Loading...</div>
+      return <div>You aren't logged in, please return home and try again.</div>
     } else {
-      const { account_address, username } = this.state.user;
+      const { username } = this.state.user;
       return (
         <>
-          <h1>{this.state.user.account_type} Dashboard</h1>
-          <h3> Welcome, {username}. Your Metamask account is {account_address}.</h3>
+          <h1><strong>{this.state.user.account_type} Dashboard</strong></h1>
+          <h3> Welcome, {username}.</h3>
         </>
       )
     }

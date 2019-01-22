@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as actions from '../actions';
 import { Button } from 'reactstrap';
@@ -21,7 +20,7 @@ class Register extends Component {
       password: '',
       verifyPassword: '',
       accountAddress: this.contracts.BagCount.currentProvider.selectedAddress,
-      accountType: 'center',
+      accountType: '',
       passwordMismatch: false
     }
   }
@@ -135,12 +134,12 @@ class Register extends Component {
             <div className="form-group">
             <div className="form-check">
           <label>Redemption Center</label>
-      <input type="radio" name="accountType" value="Center" checked={this.state.accountType === "Center"} onChange={event => this.handleOptionChange(event.target.value)}></input>
+      <input className = "radio" type="radio" name="accountType" value="Center" checked={this.state.accountType === "Center"} onChange={event => this.handleOptionChange(event.target.value)}></input>
       </div>
       <div className="form-check">
 
       <label>Recycling Plant</label>
-      <input type="radio" name="accountType" value="Plant" checked={this.state.accountType === "Plant"} onChange={event => this.handleOptionChange(event.target.value)}></input>
+      <input className="radio" type="radio" name="accountType" value="Plant" checked={this.state.accountType === "Plant"} onChange={event => this.handleOptionChange(event.target.value)}></input>
              </div>
              </div>
              </div>

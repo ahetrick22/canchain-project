@@ -5,8 +5,13 @@ contract BagCount {
     //used to record a delivery
     struct Delivery {
         address center;
+        address plant;
         uint bagCount;
         uint plantCount;
+        uint centerDt;
+        uint plantDt;
+        uint centerBn;
+        uint plantBn;
     }
     
     //initial creator of the contract
@@ -35,8 +40,13 @@ contract BagCount {
     
     event CheckDelivery(
         address center,
+        address plant,
         uint centerBagCount,
-        uint plantCount
+        uint plantCount,
+        uint centerDt,
+        uint plantDt,
+        uint centerBn,
+        uint plantBn
     );
     
     //constructor function which assigns the value of the plant to the creator & initializes UID
@@ -49,8 +59,13 @@ contract BagCount {
     function recordCount(uint newCount) public returns(uint) {
         Delivery memory newDelivery = Delivery({
             center: msg.sender,
+            plant: msg.sender,
             bagCount: newCount,
-            plantCount: 0
+            plantCount: 0,
+            centerDt: now,
+            plantDt: 0,
+            centerBn: block.number,
+            plantBn: 0
         });
         deliveryId++;
         deliveries[deliveryId] = newDelivery;
@@ -63,24 +78,23 @@ contract BagCount {
         Delivery storage delivery = deliveries[requestedId];
         uint centerCount = delivery.bagCount;
         delivery.plantCount = verifiedCount;
+        delivery.plant = msg.sender;
+        delivery.plantDt = now;
+        delivery.plantBn = block.number;
         if (verifiedCount > centerCount) {
             emit Discrepancy(verifiedCount - centerCount);
+            return verifiedCount - centerCount;
         } else {
-            emit Discrepancy(delivery.bagCount - centerCount);
+            emit Discrepancy(centerCount - verifiedCount);
+            return centerCount - verifiedCount;
         }
-        return verifiedCount - delivery.bagCount;
     }
     
     //calls a specific recorded delivery - can only be viewed accurately after both parties have submitted their count
-    function getDelivery(uint requestedId) public returns (address, uint, uint) {
-        Delivery storage delivery = deliveries[requestedId];
-        if (delivery.plantCount != 0) {
-            emit CheckDelivery(delivery.center, delivery.bagCount, delivery.plantCount);
-            return (delivery.center, delivery.bagCount, delivery.plantCount);
-        }
-        else {
-            emit CheckDelivery(delivery.center, delivery.bagCount, delivery.plantCount);
-            return (delivery.center,0,0);
-        }
+    function getDelivery(uint requestedId) public returns (address, address, uint, uint, uint, uint, uint, uint) {
+        Delivery storage d = deliveries[requestedId];
+        emit CheckDelivery(d.center,d.plant,d.bagCount,d.plantCount,d.centerDt,d.plantDt,d.centerBn,d.plantBn);
+        return (d.center,d.plant,d.bagCount,d.plantCount,d.centerDt,d.plantDt,d.centerBn,d.plantBn);
     } 
 }
+

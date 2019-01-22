@@ -10,6 +10,7 @@ import App from "./components/App";
 import createRootReducer from './reducers';
 import BagCount from "./contracts/BagCount.json";
 import { configureStore } from 'redux-starter-kit'
+import Navbar from './components/Navbar';
 
 //create the browser history to use with connected react router
 const history = createBrowserHistory();
@@ -47,13 +48,15 @@ const store = configureStore({
 // pass in the drizzle instance and its options around the standard provider
 ReactDOM.render((
   <DrizzleProvider options = {options} >
-  <Provider store={store}>
-  <LoadingContainer>
-      <ConnectedRouter history={history} >
-          <App />            
-      </ConnectedRouter>
+    <Provider store={store}>
+      <LoadingContainer>
+        <ConnectedRouter history={history} >
+          <>
+            <Navbar history={history}/>
+            <App />            
+          </>
+        </ConnectedRouter>
       </LoadingContainer>
-  </Provider>
-</DrizzleProvider>
-
+    </Provider>
+  </DrizzleProvider>
 ), document.getElementById("root"));

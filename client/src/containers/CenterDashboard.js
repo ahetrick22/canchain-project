@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import DashboardHeader from './DashboardHeader';
 import PropTypes from 'prop-types';
+import DashboardTable from '../components/DashboardTable';
+import FullModal from './FullModal';
 
 class CenterDashboard extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
       user: null,
-      count: 0,
       confirmed: false,
-      confirmationString: ''
+      confirmationString: '', 
+      deliveries: []
     }
     this.contract = context.drizzle.contracts.BagCount;
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     //get the current user to display a welcome message on their dashboard
-    fetch('/currentuser',
+    await fetch('/currentuser',
     {
       headers: {
       "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -32,15 +33,17 @@ class CenterDashboard extends Component {
     .catch(error => {
       console.log(error);
     });  
+    await this.viewPreviousDeliveries();
   }
 
-  createDelivery = async () => {
+  createDelivery = async (count) => {
     //the center that is creating the delivery
     const deliveryInfo = {
       centerId: this.state.user.id,
+      centerCount: count
     }
     // send the current count to the contract (center address comes from web3 injection)
-    this.contract.methods.recordCount(this.state.count).send()
+    this.contract.methods.recordCount(count).send()
       .then(data => {
         //this is the delivery id from the contract, which will need to be referenced for the plant to verify it
         deliveryInfo.contractId = data.events.LogCenterDelivery.returnValues.id;
@@ -56,54 +59,66 @@ class CenterDashboard extends Component {
         }).then(res => res.json())
           .then(data => {
             this.setState({confirmed:true})
-            this.setState({confirmationString: `Your transaction is confirmed with a bag count of ${this.state.count} and contract ID of ${data.contractId}.`})
-            this.setState({ count: '' })
+            this.setState({confirmationString: `Your transaction is confirmed with a bag count of ${count} and contract ID of ${data.contractId}.`})
           })
       })
   }
 
-  // viewPreviousDeliveries = () => {
-  //   fetch(`/deliveries/${this.state.user.id}`,
-  //   {
-  //     headers: {
-  //     "Authorization": `Bearer ${localStorage.getItem('token')}`,
-  //     }
-  //   })
-  //   .then(res => res.json())
-  //     .then(data => {
-  //       console.log(data);
-  //     })
-  //   .catch(error => {
-  //     console.log(error);
-  //   });  
-  // }
-
-  onInputChange = count => {
-    this.setState({ count });
+  viewPreviousDeliveries = () => {
+    fetch(`/deliveries/${this.state.user.id}`,
+    {
+      headers: {
+      "Authorization": `Bearer ${localStorage.getItem('token')}`,
+      }
+    })
+    .then(res => res.json())
+      .then(data => {
+        data.forEach(item => {
+          this.setState( {deliveries: this.state.deliveries.concat([item]) });
+        })
+      })
+    .catch(error => {
+      console.log(error);
+    });  
   }
 
-  seeReconciliations = () => {
-
-  }
+  viewChainRecord = async (contract_id) => {
+    let chainRecord = {};
+    await this.contract.methods.getDelivery(contract_id).call()
+      .then(data => { 
+          chainRecord.centerAddress = data[0];
+          chainRecord.plantAddress = data[1];
+          chainRecord.centerCount = data[2];
+          chainRecord.plantCount = data[3];
+          chainRecord.centerDt = data[4];
+          chainRecord.plantDt = data[5];
+          chainRecord.centerBn = data[6];
+          chainRecord.plantBn = data[7];
+    });
+    return await chainRecord;
+  }; 
 
   render() {
-    // if (!this.state.user) {
-    //   return (<Redirect to="/" />)
-    // } else {
+    if (!this.state.user) {
+      return (<div>Loading...</div>)
+    } else {
       return(
-          <>
-            <DashboardHeader history={this.props.history}/>
-            <label>Enter your count to get an id:</label>
-            <input value={this.state.count}
-              onChange={e => this.onInputChange(e.target.value)} />          
-            <button onClick={this.createDelivery}> Create a Delivery </button>
-            <button onClick={this.seeReconciliations}> See Reconciliations </button>
+        <div className="main-class">
+           <div className ="container">
+            <div className = "row">
+              <div className="col dashboard-page">
+            <DashboardHeader />
+            <FullModal onClickFunc={this.createDelivery} buttonLabel="Create New Delivery"/>          
+            <DashboardTable viewChainRecord={this.viewChainRecord} account_type={this.state.user.account_type} deliveries={this.state.deliveries} />
             <p>{this.state.confirmed && this.state.confirmationString}</p>
-          </>
+      </div>
+      </div>
+      </div>
+      </div>
       )
   }
   }
-//}
+}
 
 CenterDashboard.contextTypes = {
   drizzle: PropTypes.object

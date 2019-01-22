@@ -6,12 +6,10 @@ import Register from '../containers/Register';
 import CenterDashboard from '../containers/CenterDashboard';
 import PlantDashboard from '../containers/PlantDashboard';
 import { Switch, Route } from 'react-router-dom';
-import Navbar from './Navbar';
 
 const App = () => {
     return (
       <>
-      <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/register" component={Register} />

@@ -3,9 +3,9 @@
 
 $font-stack: 'Rokkitt', serif;
 $logo-font: 'Fugaz One', cursive;
-$primary-color: rgba(0,152,255, 0.9);
+$primary-color: rgba(0,152,255, 0.8);
 $secondary-color: rgb(12,85,232);
-$tertiary-color: rgba(13,255,223,0.9);
+$tertiary-color: rgba(13,255,223,0.7);
 $gray: #404040;
 $button-color: #FF9700;
 
@@ -18,6 +18,7 @@ body {
 
 nav {
   background-color: $tertiary-color;
+  margin-bottom: 10px;
   .logo {
     font-family: $logo-font;
   }
@@ -31,8 +32,6 @@ nav {
 
 h1 {
   font-size: 3.0rem;
-  padding-top: 10%;
-
 }
 
 
@@ -71,91 +70,94 @@ label {
 .register-page {
   text-align: center;
   background-color: $primary-color; 
-  background-color: $primary-color;
   color: $gray;
-  box-shadow: 1px 2px 3px 4px $gray;
+  box-shadow: 2px 4px 6px 8px $gray;
   align-items: center;
   margin-bottom: 5%;
+
+  input {
+    width: 95%;
+  }
+
+  .radio {
+    width: 20%;
+  }
 
   button {
     width: 30%;
     margin-top: 10px;
     margin-bottom: 10px;
   }
-
-
-  // .form-group {
-  //   padding-right: 10%;
-  // }
-
-}
-/* 
-.c-modal-cover {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10; 
-  transform: translateZ(0);
-  background-color: rgba(#000, 0.15);
 }
 
-.c-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 2.5em 1.5em 1.5em 1.5em;
-  background-color: #FFFFFF;
-  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+.dashboard-page {
+  text-align: center;
+  background-color: $primary-color; 
+  color: $gray;
+  box-shadow: 2px 4px 6px 8px $gray;
+  align-items: center;
+  margin-bottom: 5%;
+  
+  button {
+    width: 30%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 
-  @media screen and (min-width: 500px) {
-    left: 50%;
-    top: 50%;
-    height: auto;
-    transform: translate(-50%, -50%);
-    max-width: 30em;
-    max-height: calc(100% - 1em);
+}
+
+.dashboard-table {
+  color: $tertiary-color;
+  font-family: serif;
+  font-weight: lighter;
+
+  tr {
+    justify-items: center;
   }
 }
 
-.c-modal__close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: .5em;
-  line-height: 1;
-  background: #f6f6f7;
-  border: 0;
-  box-shadow: 0;
+%status-circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.red-circle {
+  @extend %status-circle;
+  background-color:red;
+}
+
+.green-circle {
+  @extend %status-circle;
+  background-color: green;
+}
+
+.yellow-circle {
+  @extend %status-circle;
+  background-color: yellow;
+}
+
+.verify-button {
+  background-color: $tertiary-color;
+  color: $gray;
+  padding: 5px;
   cursor: pointer;
+  box-shadow: 2px 2px 2px 2px $gray;
+  color: white;
+  margin: 0 10%;
 }
 
-.c-modal__close-icon {
-  width: 25px;
-  height: 25px;
-  fill: transparent;
-  stroke: black;
-  stroke-linecap: round;
-  stroke-width: 2;
+.disabled-button {
+  background-color: rgba(13,255,223,0.2);
+  cursor: not-allowed;
+  color: $gray;
 }
 
-.c-modal__body {
-  padding-top: .25em;
+.fa-size {
+  font-size: 24px;
 }
 
-.u-hide-visually {
-  border: 0 !important;
-  clip: rect(0 0 0 0) !important;
-  height: 1px !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  position: absolute !important;
-  width: 1px !important;
-  white-space: nowrap !important;
-} */
+.center {
+  text-align: center;
+}

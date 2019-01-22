@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import DashboardHeader from './DashboardHeader';
 import PropTypes from 'prop-types';
 import UnverifiedDeliveries from '../components/UnverifiedDropdown';
-import Modal from './Modal'; 
-import { Button } from 'reactstrap';
 
 class PlantDashboard extends Component {
   constructor(props, context) {
@@ -55,13 +52,12 @@ class PlantDashboard extends Component {
     //show them a modal to be able to put in the plant count & verify
     //send the verifyCount method & also update the DB
     const deliveryVerification = {
-      contract_id : this.state.selectedContractId
+      contract_id : this.state.selectedContractId,
+      plantCount: this.state.count
     }
-    console.log('selectedId', this.state.selectedContractId);
     this.contract.methods.verifyDelivery(this.state.selectedContractId, this.state.count).send()
       .then(data => {
         //this is the discrepancy emitted from the contract
-        console.log(data.events.Discrepancy.returnValues);
         deliveryVerification.discrepancy = data.events.Discrepancy.returnValues.difference;
         fetch('/verifydelivery', {
           method: 'PUT',
@@ -76,6 +72,8 @@ class PlantDashboard extends Component {
           //save those discrepancies to go into a menu
           console.log(data);
         })
+      }).catch(error => {
+        console.error(error);
       })
   }
 
@@ -94,8 +92,10 @@ class PlantDashboard extends Component {
 
   render() {
     return(
-   //   if(!authenticated) then redirect
-        <>
+      <div className="main-class">
+      <div className ="container">
+       <div className = "row">
+         <div className="col dashboard-page">
           <DashboardHeader history={this.props.history}/>
           <UnverifiedDeliveries unverifiedDeliveries={this.state.unverifiedDeliveries} handleDropdownChange={this.handleDropdownChange}/>
           <label>Enter your count to verify the selected delivery:</label>
@@ -103,7 +103,10 @@ class PlantDashboard extends Component {
             onChange={e => this.onInputChange(e.target.value)} />          
           <button onClick={this.verifyLatestDeliveries}>Verify Latest Deliveries</button>
           <button onClick={this.reconcileDiscrepancies}>View and Reconcile Discrepancies</button>
-        </>
+          </div>
+      </div>
+      </div>
+      </div>
     )
   }
 }
@@ -113,5 +116,3 @@ PlantDashboard.contextTypes = {
 }
 
 export default connect(null, actions)(PlantDashboard);
-
-{/* <Modal /> */}
