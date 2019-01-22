@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as actions from '../actions';
-
+import { Button } from 'reactstrap';
 
 class Register extends Component {
 
@@ -15,7 +15,7 @@ class Register extends Component {
     this.state = {
       centerName: '',
       city: '',
-      state: 'NY',
+      state: '',
       contactName: '',
       username: '',
       password: '',
@@ -85,39 +85,73 @@ class Register extends Component {
 
   render() {
     return(
-      <>
+      <div className='main-class'>
+      <div className ="container">
+      <div className = "row">
+      <div className = "col-2">
+      </div>
+      <div className="col-8 register-page">
        <h1>Create New Account </h1>
+       <div role="form">
+       <div className="form-group">
           <label>Center Name</label>
-             <input type='text' value={this.state.centerName}
-      onChange={event => this.onCenterNameChange(event.target.value)}></input>               
+             <input type='text' placeholder="Center Name" value={this.state.centerName}
+      onChange={event => this.onCenterNameChange(event.target.value)}></input>       
+      </div>   
+      <div className="form-group">
               <label>City</label>
-              <input type='text' value={this.state.city}
+              <input type='text' placeholder="City" value={this.state.city}
       onChange={event => this.onCityChange(event.target.value)}></input>
+            </div>   
+            <div className="form-group">
               <label>State</label>
-              <input type='text' value={this.state.state}
+              <input type='text' placeholder="State" value={this.state.state}
       onChange={event => this.onStateChange(event.target.value)}></input>
-                    <label>Contact Full Name</label>
-              <input type='text' value={this.state.contactName}
+            </div>   
+            <div className="form-group">
+                          <label>Contact Full Name</label>
+              <input type='text' placeholder="Contact Name" value={this.state.contactName}
       onChange={event => this.onContactNameChange(event.target.value)}></input> 
+            </div>   
+            <div className="form-group">
                     <label>Username</label>
-              <input type='text' value={this.state.username}
+              <input type='text' placeholder="Username" value={this.state.username}
       onChange={event => this.onUsernameChange(event.target.value)}></input>
-                    <label>Account Address (from Metamask login)</label>
+            </div>   
+            <div className="form-group">
+                    <label>Account Address</label>
               <input type='text' readOnly={true} value={this.state.accountAddress}></input>     
+              </div>   
+              <div className="form-group">
               <label>Password</label>
-              <input type='password' value={this.state.password}
+              <input type='password' placeholder="Password" value={this.state.password}
       onChange={event => this.onPasswordChange(event.target.value)}></input>
+            </div>   
+            <div className="form-group">
     <label>Verify Password</label>
-     <input type='password' value={this.state.verifyPassword}
+     <input type='password' placeholder="Verify Password" value={this.state.verifyPassword}
       onChange={event => this.onVerifyPasswordChange(event.target.value)}></input>
+            </div>   
+            <div className="form-group">
+            <div className="form-check">
           <label>Redemption Center</label>
       <input type="radio" name="accountType" value="Center" checked={this.state.accountType === "Center"} onChange={event => this.handleOptionChange(event.target.value)}></input>
+      </div>
+      <div className="form-check">
+
       <label>Recycling Plant</label>
       <input type="radio" name="accountType" value="Plant" checked={this.state.accountType === "Plant"} onChange={event => this.handleOptionChange(event.target.value)}></input>
-             <button onClick={this.handleSignUpClick}>Register Account</button> 
+             </div>
+             </div>
+             </div>
+             <Button color="success" onClick={this.handleSignUpClick}>Register</Button> 
              <br />
-             <Link to='/'>Back to Home</Link>
-            </>
+             </div>
+             </div>
+            <div className = "col-2">
+            </div>
+            </div>
+            </div>
         )  
   }
 }

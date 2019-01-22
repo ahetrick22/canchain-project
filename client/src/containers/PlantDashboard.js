@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import DashboardHeader from './DashboardHeader';
 import PropTypes from 'prop-types';
 import UnverifiedDeliveries from '../components/UnverifiedDropdown';
+import Modal from './Modal'; 
+import { Button } from 'reactstrap';
 
 class PlantDashboard extends Component {
   constructor(props, context) {
@@ -96,7 +98,7 @@ class PlantDashboard extends Component {
         <>
           <DashboardHeader history={this.props.history}/>
           <UnverifiedDeliveries unverifiedDeliveries={this.state.unverifiedDeliveries} handleDropdownChange={this.handleDropdownChange}/>
-          <label>Enter your count to get an id:</label>
+          <label>Enter your count to verify the selected delivery:</label>
           <input value={this.state.count}
             onChange={e => this.onInputChange(e.target.value)} />          
           <button onClick={this.verifyLatestDeliveries}>Verify Latest Deliveries</button>
@@ -111,3 +113,5 @@ PlantDashboard.contextTypes = {
 }
 
 export default connect(null, actions)(PlantDashboard);
+
+{/* <Modal /> */}

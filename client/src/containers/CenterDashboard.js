@@ -87,20 +87,23 @@ class CenterDashboard extends Component {
   }
 
   render() {
-    return(
-   //   if(!authenticated) then redirect
-        <>
-          <DashboardHeader history={this.props.history}/>
-          <label>Enter your count to get an id:</label>
-          <input value={this.state.count}
-            onChange={e => this.onInputChange(e.target.value)} />          
-          <button onClick={this.createDelivery}> Create a Delivery </button>
-          <button onClick={this.seeReconciliations}> See Reconciliations </button>
-          <p>{this.state.confirmed && this.state.confirmationString}</p>
-        </>
-    )
+    // if (!this.state.user) {
+    //   return (<Redirect to="/" />)
+    // } else {
+      return(
+          <>
+            <DashboardHeader history={this.props.history}/>
+            <label>Enter your count to get an id:</label>
+            <input value={this.state.count}
+              onChange={e => this.onInputChange(e.target.value)} />          
+            <button onClick={this.createDelivery}> Create a Delivery </button>
+            <button onClick={this.seeReconciliations}> See Reconciliations </button>
+            <p>{this.state.confirmed && this.state.confirmationString}</p>
+          </>
+      )
   }
-}
+  }
+//}
 
 CenterDashboard.contextTypes = {
   drizzle: PropTypes.object

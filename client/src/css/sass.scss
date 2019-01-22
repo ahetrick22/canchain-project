@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css?family=Rokkitt');
+@import url('https://fonts.googleapis.com/css?family=Fugaz+One');
+
+$font-stack: 'Rokkitt', serif;
+$logo-font: 'Fugaz One', cursive;
+$primary-color: rgba(0,152,255, 0.9);
+$secondary-color: rgb(12,85,232);
+$tertiary-color: rgba(13,255,223,0.9);
+$gray: #404040;
+$button-color: #FF9700;
+
+
+body {
+  background-image: url(https://images.pexels.com/photos/3008/drinks-supermarket-cans-beverage.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+  background-size: cover;
+  font-family: $font-stack;
+}
+
+nav {
+  background-color: $tertiary-color;
+  .logo {
+    font-family: $logo-font;
+  }
+}
+
+
+.main-class {
+  height: 100%;
+  padding-top: 5%;
+}
+
+h1 {
+  font-size: 3.0rem;
+  padding-top: 10%;
+
+}
+
+
+label {
+  padding-right: 15px;
+  font-size: 1.3rem;
+}
+
+.login-card {
+  text-align: center;
+  align-items: center;
+  background-color: $primary-color;
+  color: $gray;
+  border-radius: 30%;
+  box-shadow: 2px 4px 6px 8px $gray;
+
+  button {
+    width: 30%;
+    margin-top: 10px;
+  }
+
+  h1 {
+    font-family: $logo-font;
+  }
+
+
+  .new-user {
+    font-size: 1.5rem;
+  }
+
+  .register {
+   color: $button-color; 
+  }
+}
+
+.register-page {
+  text-align: center;
+  background-color: $primary-color; 
+  background-color: $primary-color;
+  color: $gray;
+  box-shadow: 1px 2px 3px 4px $gray;
+  align-items: center;
+  margin-bottom: 5%;
+
+  button {
+    width: 30%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+
+  // .form-group {
+  //   padding-right: 10%;
+  // }
+
+}
+/* 
+.c-modal-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10; 
+  transform: translateZ(0);
+  background-color: rgba(#000, 0.15);
+}
+
+.c-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 2.5em 1.5em 1.5em 1.5em;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media screen and (min-width: 500px) {
+    left: 50%;
+    top: 50%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    max-width: 30em;
+    max-height: calc(100% - 1em);
+  }
+}
+
+.c-modal__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: .5em;
+  line-height: 1;
+  background: #f6f6f7;
+  border: 0;
+  box-shadow: 0;
+  cursor: pointer;
+}
+
+.c-modal__close-icon {
+  width: 25px;
+  height: 25px;
+  fill: transparent;
+  stroke: black;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.c-modal__body {
+  padding-top: .25em;
+}
+
+.u-hide-visually {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+} */

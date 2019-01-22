@@ -42,7 +42,6 @@ class DashboardHeader extends Component {
       return (
         <>
           <h1>{this.state.user.account_type} Dashboard</h1>
-          <button onClick={this.logoutUser}>Logout</button>
           <h3> Welcome, {username}. Your Metamask account is {account_address}.</h3>
         </>
       )

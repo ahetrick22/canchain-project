@@ -43,6 +43,7 @@ export const signup = (data, callback) => dispatch => {
 //signout a user and clear their token
 export const signout = () => {
   localStorage.removeItem('token');
+  
   return {
     type: AUTH_USER,
     payload: ''

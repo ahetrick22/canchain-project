@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
+import { Button } from 'reactstrap';
 
 class Home extends Component {
 
@@ -35,36 +36,42 @@ class Home extends Component {
           this.props.history.push(`/${this.state.user.account_type}dashboard`);
         })
       .catch(error => {
-        if (error='Unauthorized') {
-          
-        }
         console.log(error);
       });
       });
-      
-      // if (this.state.user) {
-      // } else {
-      //   await alert('Incorrect username or password');
-     // }
   }
 
     render() {
         return(
-            <>
-            <h1>Welcome to CanChain </h1>
-            <h5>A distributed ledger system for secure, verified data without a need for third-party intervention</h5>
-            <label>Username: </label>
+          <div className="main-class">
+            <div className ="container">
+            <div className = "row">
+            <div className = "col-2">
+            </div>
+            <div className="col-8 card login-card">
+            <h1>CanChain</h1>
+            <h4>A distributed ledger system for secure, verifiable data</h4>
+            <div>
+            <label><strong>Username:</strong></label>
              <input type='text' value={this.state.username}
-      onChange={event => this.onUsernameInputChange(event.target.value)}></input>   
-        <label>Password:</label>            
+      onChange={event => this.onUsernameInputChange(event.target.value)}></input>  
+          </div> 
+          <div>
+        <label><strong>Password: </strong></label>            
       <input type='password' value={this.state.password}
       onChange={event => this.onPasswordInputChange(event.target.value)}></input>
-             <button onClick={this.handleLoginClick}>Login</button> 
+            </div>
+             <Button color="success" onClick={this.handleLoginClick}>Login</Button> 
              <br />
-             <p>New User? <Link to='/register'>Register now</Link></p>
-
-            </>
-        )  
+             <p className="new-user"><strong>New User? <Link to='/register' className="register"> Register now!</Link></strong></p>
+            </div>
+            <div className = "col-2">
+            </div>
+            </div>
+            </div>
+            </div>
+        )
+           
   }
 }
 
