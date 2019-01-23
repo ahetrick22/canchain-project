@@ -2,13 +2,14 @@ import { AUTH_USER, AUTH_ERROR } from '../actions/types';
 
 const INITIAL_STATE = {
   authenticated: localStorage.getItem('token') || '',
+  user: null,
   errorMessage: '',
 };
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case AUTH_USER:
-      return { ...state, authenticated: action.payload.token
+      return { ...state, authenticated: action.payload.token, user: action.payload.user
         };
     case AUTH_ERROR:
       return { ...state, errorMessage: action.payload };

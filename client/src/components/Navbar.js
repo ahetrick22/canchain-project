@@ -1,34 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null,
-    }
-  }
-
-  componentDidMount = async () => {
-    if (localStorage.getItem('token')) {
-    //get the current user to display a welcome message on their dashboard
-        await fetch('/currentuser',
-        {
-          headers: {
-          "Authorization": `Bearer ${localStorage.getItem('token')}`,
-          }
-        })
-        .then(res => res.json())
-          .then(data => {
-            this.setState({ user: data })
-          })
-        .catch(error => {
-          console.log(error);
-        });  
-    } 
-  }
-
 
   logoutUser = async () => {
     await this.props.signout();
@@ -36,23 +11,41 @@ class Navbar extends Component {
   }
 
   render () {
-    return (
-      <nav className="navbar navbar-light">
-      <a className="navbar-brand logo" href="/">
-      <img src ={window.location.origin + '/favicon.ico'} alt="logo"></img>
-        CanChain</a>
-              <ul className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                  {this.state.user ? 
-                    <button className="btn btn-danger my-2 my-sm-0" type="submit" onClick={this.logoutUser}>Logout</button>
-                    : 
-                    <button className="btn btn-success">Login</button>}
+      if (this.props.user) {
+        return (
+        <nav className="navbar navbar-light">
+        <Link to="/" className="navbar-brand mr-auto logo">
+        <img src ={window.location.origin + '/favicon.ico'} alt="logo"></img>CanChain</Link>
+            <ul className="navbar-brand mx-auto">
+            <li className="nav-item nav-welcome">Welcome, {this.props.user.username}.</li> 
+            </ul>
+                <ul className=" ml-auto">
+                    <li className="nav-item">
+                      <button className="btn btn-danger" type="submit" onClick={this.logoutUser}>Logout</button>               
                     </li>
-      
-              </ul>
-      </nav>
-        )
+                </ul>
+        </nav>
+          )
+      } else {
+        return   (<nav className="navbar navbar-light">
+      <Link to="/" className="navbar-brand logo">
+        <img src ={window.location.origin + '/favicon.ico'} alt="logo"></img>CanChain</Link>
+                <ul className="navbar-nav ml-auto">
+                    <li className="nav-item">
+                      <Link to="/login"><button className="btn btn-success">Login</button></Link>
+                      </li>
+                </ul>
+        </nav>
+        )  
+    }
+
   }
 }
 
-export default connect(null, actions)(Navbar);
+const mapStateToProps = state => {
+  return {
+    user: state.authReducer.user
+  }
+}
+
+export default connect(mapStateToProps, actions)(Navbar);

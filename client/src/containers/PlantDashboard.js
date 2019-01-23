@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import DashboardHeader from './DashboardHeader';
+import DashboardHeader from '../components/DashboardHeader';
 import PropTypes from 'prop-types';
 import UnverifiedDeliveries from '../components/UnverifiedDropdown';
+import FullModal from './FullModal';
+import DashboardTable from '../components/DashboardTable';
+import { Redirect } from 'react-router-dom'
 
 class PlantDashboard extends Component {
   constructor(props, context) {
@@ -17,24 +20,9 @@ class PlantDashboard extends Component {
     this.contract = context.drizzle.contracts.BagCount;
   }
 
-  componentDidMount = () => {
-    //get the current user to display a welcome message on their dashboard
-    fetch('/currentuser',
-    {
-      headers: {
-      "Authorization": `Bearer ${localStorage.getItem('token')}`,
-      }
-    })
-    .then(res => res.json())
-      .then(data => {
-        this.setState({ user: data })
-      })
-    .catch(error => {
-      console.log(error);
-    });  
-
+  componentDidMount =  () => {
     //get the unverified deliveries to render them in a dropdown
-    fetch('/unverifieddeliveries', 
+    fetch('/deliveries?unverified=true', 
     {
       headers: {
       "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -43,7 +31,7 @@ class PlantDashboard extends Component {
     .then(res => res.json())
       .then(data => {
         data.forEach(item => {
-          this.setState( {unverifiedDeliveries: this.state.unverifiedDeliveries.concat([item.contract_id]) })
+          this.setState( {unverifiedDeliveries: this.state.unverifiedDeliveries.concat([item]) })
         })
       })
   }
@@ -77,10 +65,6 @@ class PlantDashboard extends Component {
       })
   }
 
-  onInputChange = count => {
-    this.setState({ count });
-  }
-
   reconcileDiscrepancies = () => {
     console.log('reconciling');
   }
@@ -90,19 +74,36 @@ class PlantDashboard extends Component {
     await this.setState({ selectedContractId: value })
   }
 
+  viewChainRecord = async (contract_id) => {
+    let chainRecord = {};
+    await this.contract.methods.getDelivery(contract_id).call()
+      .then(data => { 
+          chainRecord.centerAddress = data[0];
+          chainRecord.plantAddress = data[1];
+          chainRecord.centerCount = data[2];
+          chainRecord.plantCount = data[3];
+          chainRecord.centerDt = data[4];
+          chainRecord.plantDt = data[5];
+          chainRecord.centerBn = data[6];
+          chainRecord.plantBn = data[7];
+    });
+    return await chainRecord;
+  }; 
+
   render() {
+    if (!this.props.user) {
+      return (<Redirect to="/login" />)
+    } else {
+      const { account_type } = this.props.user;
     return(
       <div className="main-class">
       <div className ="container">
        <div className = "row">
          <div className="col dashboard-page">
-          <DashboardHeader history={this.props.history}/>
-          <UnverifiedDeliveries unverifiedDeliveries={this.state.unverifiedDeliveries} handleDropdownChange={this.handleDropdownChange}/>
-          <label>Enter your count to verify the selected delivery:</label>
-          <input value={this.state.count}
-            onChange={e => this.onInputChange(e.target.value)} />          
-          <button onClick={this.verifyLatestDeliveries}>Verify Latest Deliveries</button>
-          <button onClick={this.reconcileDiscrepancies}>View and Reconcile Discrepancies</button>
+          <DashboardHeader account_type={account_type} history={this.props.history}/>
+          <FullModal account_type={account_type} onClickFunc={this.verifyDelivery} buttonLabel="Verify Deliveries"/>          
+          <DashboardTable viewChainRecord={this.viewChainRecord} account_type={account_type} deliveries={this.state.unverifiedDeliveries} />
+      
           </div>
       </div>
       </div>
@@ -110,9 +111,24 @@ class PlantDashboard extends Component {
     )
   }
 }
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state.authReducer.user
+  }
+}
 
 PlantDashboard.contextTypes = {
   drizzle: PropTypes.object
 }
 
-export default connect(null, actions)(PlantDashboard);
+export default connect(mapStateToProps, actions)(PlantDashboard);
+
+
+{/* <UnverifiedDeliveries unverifiedDeliveries={this.state.unverifiedDeliveries} handleDropdownChange={this.handleDropdownChange}/>
+<label>Enter your count to verify the selected delivery:</label>
+<input value={this.state.count}
+  onChange={e => this.onInputChange(e.target.value)} />          
+<button onClick={this.verifyLatestDeliveries}>Verify Latest Deliveries</button>
+<button onClick={this.reconcileDiscrepancies}>View and Reconcile Discrepancies</button> */}

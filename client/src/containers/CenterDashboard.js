@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import DashboardHeader from './DashboardHeader';
+import DashboardHeader from '../components/DashboardHeader';
 import PropTypes from 'prop-types';
 import DashboardTable from '../components/DashboardTable';
 import FullModal from './FullModal';
+import { Redirect } from 'react-router-dom';
 
 class CenterDashboard extends Component {
   constructor(props, context) {
@@ -19,21 +20,7 @@ class CenterDashboard extends Component {
   }
 
   componentDidMount = async () => {
-    //get the current user to display a welcome message on their dashboard
-    await fetch('/currentuser',
-    {
-      headers: {
-      "Authorization": `Bearer ${localStorage.getItem('token')}`,
-      }
-    })
-    .then(res => res.json())
-      .then(data => {
-        this.setState({ user: data })
-      })
-    .catch(error => {
-      console.log(error);
-    });  
-    await this.viewPreviousDeliveries();
+    await this.viewDeliveries();
   }
 
   createDelivery = async (count) => {
@@ -60,12 +47,14 @@ class CenterDashboard extends Component {
           .then(data => {
             this.setState({confirmed:true})
             this.setState({confirmationString: `Your transaction is confirmed with a bag count of ${count} and contract ID of ${data.contractId}.`})
+            this.viewDeliveries();
           })
       })
   }
 
-  viewPreviousDeliveries = () => {
-    fetch(`/deliveries/${this.state.user.id}`,
+  viewDeliveries = () => {
+    this.setState( { deliveries: [] } );
+    fetch(`/deliveries/${this.props.user.id}`,
     {
       headers: {
       "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -99,18 +88,18 @@ class CenterDashboard extends Component {
   }; 
 
   render() {
-    if (!this.state.user) {
-      return (<div>Loading...</div>)
+    if (!this.props.user) {
+      return (<Redirect to="/login" />)
     } else {
+      const { account_type } = this.props.user;
       return(
         <div className="main-class">
            <div className ="container">
             <div className = "row">
               <div className="col dashboard-page">
-            <DashboardHeader />
-            <FullModal onClickFunc={this.createDelivery} buttonLabel="Create New Delivery"/>          
-            <DashboardTable viewChainRecord={this.viewChainRecord} account_type={this.state.user.account_type} deliveries={this.state.deliveries} />
-            <p>{this.state.confirmed && this.state.confirmationString}</p>
+            <DashboardHeader account_type={account_type}/>
+            <FullModal account_type={account_type} onClickFunc={this.createDelivery} buttonLabel="Create New Delivery"/>          
+            <DashboardTable viewChainRecord={this.viewChainRecord} account_type={account_type} deliveries={this.state.deliveries} />
       </div>
       </div>
       </div>
@@ -120,8 +109,14 @@ class CenterDashboard extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.authReducer.user
+  }
+}
+
 CenterDashboard.contextTypes = {
   drizzle: PropTypes.object
 }
 
-export default connect(null, actions)(CenterDashboard);
+export default connect(mapStateToProps, actions)(CenterDashboard);

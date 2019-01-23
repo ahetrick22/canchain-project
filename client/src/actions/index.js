@@ -1,4 +1,4 @@
-import { AUTH_USER, AUTH_ERROR, SET_USER } from './types';
+import { AUTH_USER, AUTH_ERROR } from './types';
 
 //post a user's login information
 export const login = (data, callback) => dispatch => {
@@ -10,7 +10,7 @@ export const login = (data, callback) => dispatch => {
   })
     .then(res => res.json())
     .then(async (data) => {
-        await localStorage.setItem('token', data.token)
+        localStorage.setItem('token', data.token)
         await dispatch({ type: AUTH_USER, payload: data });
         await callback();
       })
@@ -31,6 +31,7 @@ export const signup = (data, callback) => dispatch => {
     .then(data => {
       console.log(data);
       dispatch({ type: AUTH_USER, payload: data });
+      // dispatch({type: SET_USER, payload: data.user })
       localStorage.setItem('token', data.token)
       callback();
     })
@@ -43,31 +44,8 @@ export const signup = (data, callback) => dispatch => {
 //signout a user and clear their token
 export const signout = () => {
   localStorage.removeItem('token');
-  
   return {
     type: AUTH_USER,
     payload: ''
   }
 }
-
-//set the current user information - currently won't map correctly
-export const fetchUser = () => dispatch => {
-  const config = {
-    headers: {
-      "Authorization": `Bearer ${localStorage.getItem('token')}`,
-    }
-  };
-  fetch('/currentuser',
-    config
-  )
-  .then(res => res.json())
-    .then(data => {
-      console.log('fetching user', data)
-      dispatch({ type: AUTH_USER, payload: data });
-      dispatch({type: SET_USER, payload: data.user })
-      localStorage.setItem('token', data.token);
-    })
-  .catch(error => {
-    console.log(error);
-  });
-};

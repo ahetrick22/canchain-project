@@ -3,10 +3,10 @@
 
 $font-stack: 'Rokkitt', serif;
 $logo-font: 'Fugaz One', cursive;
-$primary-color: rgba(0,152,255, 0.8);
-$secondary-color: rgb(12,85,232);
-$tertiary-color: rgba(13,255,223,0.7);
-$gray: #404040;
+$primary-color: rgba(0,84,127, 0.9);
+$secondary-color: rgb(76,195,255);
+$tertiary-color: rgba(76,195,204,0.6);
+$gray: #C0C0C0;
 $button-color: #FF9700;
 
 
@@ -18,16 +18,26 @@ body {
 
 nav {
   background-color: $tertiary-color;
-  margin-bottom: 10px;
+  color: $primary-color;
+
   .logo {
     font-family: $logo-font;
+  }
+
+  .nav-welcome {
+    font-size: 1.7rem;
+    font-weight: bold;
+  }
+
+  li {
+    list-style-type: none;
   }
 }
 
 
 .main-class {
   height: 100%;
-  padding-top: 5%;
+  padding-top: 2%;
 }
 
 h1 {
@@ -107,7 +117,7 @@ label {
 }
 
 .dashboard-table {
-  color: $tertiary-color;
+  color: $secondary-color;
   font-family: serif;
   font-weight: lighter;
 

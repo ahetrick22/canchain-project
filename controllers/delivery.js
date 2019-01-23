@@ -10,7 +10,7 @@ const pool  = mysql.createPool({
 
 exports.getCenterDeliveries = (req, res) => {
   const { center } = req.params;
-  pool.query(`SELECT * FROM deliveries WHERE \`center_id\`='${center}'`, (err, data) => {
+  pool.query(`SELECT * FROM deliveries WHERE \`center_id\`='${center}' ORDER BY date_time DESC`, (err, data) => {
     if (err) throw err;
     res.json(data);
   })
@@ -41,10 +41,18 @@ exports.verifyDelivery = (req, res, next) => {
 }
 
 //get all unverified deliveries for the plant to verify them
-exports.getUnverifiedDeliveries = (req, res) => {
-pool.query(`SELECT * FROM deliveries WHERE \`verified\`= 0`, (err, data) => {
-    if (err) throw err;
-    //console.log(data);
-    res.json(data);
-  })
+exports.getDeliveries = (req, res) => {
+  //send only the unverified ones
+  if (req.query.unverified) {
+    pool.query(`SELECT * FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE deliveries.verified=0 ORDER BY deliveries.date_time DESC`, (err, data) => {
+      if (err) throw err;
+      res.json(data);
+    })
+  //send all of them
+  } else {
+    pool.query(`SELECT * FROM deliveries JOIN users ON deliveries.center_id = users.id ORDER BY deliveries.date_time DESC`, (err, data) => {
+      if (err) throw err;
+      res.json(data);
+    })
+  }
 }

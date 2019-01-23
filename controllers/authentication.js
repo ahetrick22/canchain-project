@@ -29,11 +29,8 @@ exports.signin = (req, res, next) => {
   // We just need to give them a token
   res.json({
     token: tokenForUser(req.user),
+    user: req.user[0]
   })
-}
-
-exports.currentUser = (req, res) => {
-  res.json(req.user[0])
 }
 
 exports.signup = async (req, res, next) => {

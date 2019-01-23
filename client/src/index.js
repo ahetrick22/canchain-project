@@ -10,7 +10,6 @@ import App from "./components/App";
 import createRootReducer from './reducers';
 import BagCount from "./contracts/BagCount.json";
 import { configureStore } from 'redux-starter-kit'
-import Navbar from './components/Navbar';
 
 //create the browser history to use with connected react router
 const history = createBrowserHistory();
@@ -51,10 +50,7 @@ ReactDOM.render((
     <Provider store={store}>
       <LoadingContainer>
         <ConnectedRouter history={history} >
-          <>
-            <Navbar history={history}/>
-            <App />            
-          </>
+            <App history={history}/>            
         </ConnectedRouter>
       </LoadingContainer>
     </Provider>

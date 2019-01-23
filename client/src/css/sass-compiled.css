@@ -7,16 +7,23 @@ body {
 }
 
 nav {
-  background-color: rgba(13, 255, 223, 0.7);
-  margin-bottom: 10px;
+  background-color: rgba(76, 195, 204, 0.6);
+  color: rgba(0, 84, 127, 0.9);
 }
 nav .logo {
   font-family: "Fugaz One", cursive;
 }
+nav .nav-welcome {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+nav li {
+  list-style-type: none;
+}
 
 .main-class {
   height: 100%;
-  padding-top: 5%;
+  padding-top: 2%;
 }
 
 h1 {
@@ -31,10 +38,10 @@ label {
 .login-card {
   text-align: center;
   align-items: center;
-  background-color: rgba(0, 152, 255, 0.8);
-  color: #404040;
+  background-color: rgba(0, 84, 127, 0.9);
+  color: #C0C0C0;
   border-radius: 30%;
-  box-shadow: 2px 4px 6px 8px #404040;
+  box-shadow: 2px 4px 6px 8px #C0C0C0;
 }
 .login-card button {
   width: 30%;
@@ -52,9 +59,9 @@ label {
 
 .register-page {
   text-align: center;
-  background-color: rgba(0, 152, 255, 0.8);
-  color: #404040;
-  box-shadow: 2px 4px 6px 8px #404040;
+  background-color: rgba(0, 84, 127, 0.9);
+  color: #C0C0C0;
+  box-shadow: 2px 4px 6px 8px #C0C0C0;
   align-items: center;
   margin-bottom: 5%;
 }
@@ -72,9 +79,9 @@ label {
 
 .dashboard-page {
   text-align: center;
-  background-color: rgba(0, 152, 255, 0.8);
-  color: #404040;
-  box-shadow: 2px 4px 6px 8px #404040;
+  background-color: rgba(0, 84, 127, 0.9);
+  color: #C0C0C0;
+  box-shadow: 2px 4px 6px 8px #C0C0C0;
   align-items: center;
   margin-bottom: 5%;
 }
@@ -85,7 +92,7 @@ label {
 }
 
 .dashboard-table {
-  color: rgba(13, 255, 223, 0.7);
+  color: #4cc3ff;
   font-family: serif;
   font-weight: lighter;
 }
@@ -113,11 +120,11 @@ label {
 }
 
 .verify-button {
-  background-color: rgba(13, 255, 223, 0.7);
-  color: #404040;
+  background-color: rgba(76, 195, 204, 0.6);
+  color: #C0C0C0;
   padding: 5px;
   cursor: pointer;
-  box-shadow: 2px 2px 2px 2px #404040;
+  box-shadow: 2px 2px 2px 2px #C0C0C0;
   color: white;
   margin: 0 10%;
 }
@@ -125,7 +132,7 @@ label {
 .disabled-button {
   background-color: rgba(13, 255, 223, 0.2);
   cursor: not-allowed;
-  color: #404040;
+  color: #C0C0C0;
 }
 
 .fa-size {
