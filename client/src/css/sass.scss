@@ -124,6 +124,47 @@ label {
   tr {
     justify-items: center;
   }
+
+  .count {
+    font-size: 1.4rem;
+  }
+
+
+
+}
+
+%chain-record-modal {
+  background-color: $gray;
+  font-size: 1.2rem;
+  color: $primary-color;
+  width: 125%;
+}
+
+.chain-record-modal-header {
+  @extend %chain-record-modal;
+  text-align: center;
+}
+
+.chain-record-modal-body {
+  @extend %chain-record-modal;
+
+  label {
+    font-weight: bold;
+  }
+
+}
+
+.chain-record-modal-footer {
+  @extend %chain-record-modal;
+
+  button {
+    width: 200px;
+  }
+
+}
+
+.dashboard-spinner {
+  font-size: 2.0rem;
 }
 
 %status-circle {
@@ -156,6 +197,7 @@ label {
   box-shadow: 2px 2px 2px 2px $gray;
   color: white;
   margin: 0 10%;
+  max-width: 150px;
 }
 
 .disabled-button {

@@ -99,6 +99,32 @@ label {
 .dashboard-table tr {
   justify-items: center;
 }
+.dashboard-table .count {
+  font-size: 1.4rem;
+}
+
+.chain-record-modal-footer, .chain-record-modal-body, .chain-record-modal-header {
+  background-color: #C0C0C0;
+  font-size: 1.2rem;
+  color: rgba(0, 84, 127, 0.9);
+  width: 125%;
+}
+
+.chain-record-modal-header {
+  text-align: center;
+}
+
+.chain-record-modal-body label {
+  font-weight: bold;
+}
+
+.chain-record-modal-footer button {
+  width: 200px;
+}
+
+.dashboard-spinner {
+  font-size: 2rem;
+}
 
 .yellow-circle, .green-circle, .red-circle {
   height: 20px;
@@ -127,6 +153,7 @@ label {
   box-shadow: 2px 2px 2px 2px #C0C0C0;
   color: white;
   margin: 0 10%;
+  max-width: 150px;
 }
 
 .disabled-button {

@@ -1,4 +1,4 @@
-import { AUTH_USER, AUTH_ERROR } from './types';
+import { AUTH_USER, AUTH_ERROR, FETCHING_DATA, GET_DELIVERIES } from './types';
 
 //post a user's login information
 export const login = (data, callback) => dispatch => {
@@ -9,9 +9,9 @@ export const login = (data, callback) => dispatch => {
     body: JSON.stringify(data)
   })
     .then(res => res.json())
-    .then(async (data) => {
-        localStorage.setItem('token', data.token)
-        await dispatch({ type: AUTH_USER, payload: data });
+    .then(async (jsonRes) => {
+        localStorage.setItem('token', jsonRes.token)
+        await dispatch({ type: AUTH_USER, payload: jsonRes });
         await callback();
       })
     .catch(err => {
@@ -48,4 +48,80 @@ export const signout = () => {
     type: AUTH_USER,
     payload: ''
   }
+}
+
+export const createDelivery = deliveryInfo => dispatch => {
+  //the center that is creating the delivery
+  //send the delivery to the SQL DB
+  fetch('/delivery', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      "Authorization": `Bearer ${localStorage.getItem('token')}`,
+      "Content-type": "application/json"
+  },
+  body: JSON.stringify(deliveryInfo)     
+  }).then(res => res.json())
+    .then(data => {
+      dispatch({type: FETCHING_DATA});
+      }).catch(error => {
+        console.error(error);
+  })
+}
+
+export const verifyDelivery = deliveryInfo => dispatch => {
+  fetch('/verifydelivery', {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      "Authorization": `Bearer ${localStorage.getItem('token')}`,
+      "Content-type": "application/json"
+  },
+  body: JSON.stringify(deliveryInfo) 
+  }).then(res => res.json())
+    .then(async (data) => {
+      await getDeliveriesForPlant();
+      await dispatch({type: FETCHING_DATA});
+  }).catch(error => {
+    console.error(error);
+  })
+}
+
+export const toggleFetch = () => {
+  return {
+    type: FETCHING_DATA
+  }
+}
+
+export const getDeliveriesForSingleCenter = (userId, params) => dispatch => {
+  fetch(`/deliveries/${userId}?${params}`,
+  {
+    headers: {
+    "Authorization": `Bearer ${localStorage.getItem('token')}`,
+    }
+  })
+  .then(res => res.json())
+    .then(data => {
+      console.log('delivery data', data)
+      dispatch({type: GET_DELIVERIES, payload: data});
+      })
+  .catch(error => {
+    console.log(error);
+  });  
+}
+
+export const getDeliveriesForPlant = (params) => dispatch => {
+  fetch(`/deliveries?${params}`, 
+  {
+    headers: {
+    "Authorization": `Bearer ${localStorage.getItem('token')}`,
+    }
+  })
+  .then(res => res.json())
+    .then(data => {
+      dispatch({type: GET_DELIVERIES, payload: data});
+    })
+    .catch(error => {
+      console.log(error);
+    });  
 }
