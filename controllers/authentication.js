@@ -35,8 +35,6 @@ exports.signin = (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   const { username, password, centerName, city, state, accountAddress, contactName, accountType } = req.body;
-  console.log(contactName);
-
   if (!username || !password) {
     return res.status(422).send({ error: 'You must provide username and password'})
   }

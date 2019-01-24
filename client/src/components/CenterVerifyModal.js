@@ -3,7 +3,6 @@ const moment = require('moment');
 
 const CenterVerifyModal= props => {
   const {centerAddress,
-    centerCount,
     centerDt,
     centerBn,
   } = props;

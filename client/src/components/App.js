@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
 import '../css/sass-compiled.css';
 import Home from '../containers/Home';
 import Login from '../containers/Login';

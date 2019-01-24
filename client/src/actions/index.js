@@ -1,4 +1,4 @@
-import { AUTH_USER, AUTH_ERROR, FETCHING_DATA, GET_DELIVERIES } from './types';
+import { AUTH_USER, AUTH_ERROR, FETCHING_DATA, GET_DELIVERIES, SET_PARAMS } from './types';
 
 //post a user's login information
 export const login = (data, callback) => dispatch => {
@@ -29,7 +29,6 @@ export const signup = (data, callback) => dispatch => {
   })
     .then(res => res.json()
     .then(data => {
-      console.log(data);
       dispatch({ type: AUTH_USER, payload: data });
       // dispatch({type: SET_USER, payload: data.user })
       localStorage.setItem('token', data.token)
@@ -80,7 +79,7 @@ export const verifyDelivery = deliveryInfo => dispatch => {
   body: JSON.stringify(deliveryInfo) 
   }).then(res => res.json())
     .then(async (data) => {
-      await getDeliveriesForPlant();
+      await getDeliveries('');
       await dispatch({type: FETCHING_DATA});
   }).catch(error => {
     console.error(error);
@@ -93,25 +92,24 @@ export const toggleFetch = () => {
   }
 }
 
-export const getDeliveriesForSingleCenter = (userId, params) => dispatch => {
-  fetch(`/deliveries/${userId}?${params}`,
-  {
-    headers: {
-    "Authorization": `Bearer ${localStorage.getItem('token')}`,
-    }
-  })
-  .then(res => res.json())
-    .then(data => {
-      console.log('delivery data', data)
-      dispatch({type: GET_DELIVERIES, payload: data});
-      })
-  .catch(error => {
-    console.log(error);
-  });  
-}
+// export const getDeliveriesForSingleCenter = (userId, params) => dispatch => {
+//   fetch(`/deliveries/${userId}?${params}`,
+//   {
+//     headers: {
+//     "Authorization": `Bearer ${localStorage.getItem('token')}`,
+//     }
+//   })
+//   .then(res => res.json())
+//     .then(data => {
+//       dispatch({type: GET_DELIVERIES, payload: data});
+//       })
+//   .catch(error => {
+//     console.log(error);
+//   });  
+// }
 
-export const getDeliveriesForPlant = (params) => dispatch => {
-  fetch(`/deliveries?${params}`, 
+export const getDeliveries = params => dispatch => {
+  fetch(`/deliveries${params}`, 
   {
     headers: {
     "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -124,4 +122,10 @@ export const getDeliveriesForPlant = (params) => dispatch => {
     .catch(error => {
       console.log(error);
     });  
+}
+
+export const setDeliveryParams = paramStr => {
+  return {
+    type: SET_PARAMS, payload: paramStr
+  }
 }

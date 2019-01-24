@@ -3,26 +3,27 @@
 
 $font-stack: 'Rokkitt', serif;
 $logo-font: 'Fugaz One', cursive;
-$primary-color: rgba(0,84,127, 0.9);
+$primary-color: rgba(5, 47, 69, 0.9);
 $secondary-color: rgb(76,195,255);
 $tertiary-color: rgba(76,195,204,0.6);
 $gray: #C0C0C0;
-$button-color: #FF9700;
+$link-color: #FF9700;
 
 
 body {
-  background-image: url(https://images.pexels.com/photos/3008/drinks-supermarket-cans-beverage.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
-  background-size: cover;
+  // background-image: url(https://images.pexels.com/photos/3008/drinks-supermarket-cans-beverage.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+  // background-size: cover;
   font-family: $font-stack;
+}
+
+.logo {
+  font-family: $logo-font;
 }
 
 nav {
   background-color: $tertiary-color;
   color: $primary-color;
-
-  .logo {
-    font-family: $logo-font;
-  }
+  margin-bottom: 10px;
 
   .nav-welcome {
     font-size: 1.7rem;
@@ -37,7 +38,6 @@ nav {
 
 .main-class {
   height: 100%;
-  padding-top: 2%;
 }
 
 h1 {
@@ -73,7 +73,7 @@ label {
   }
 
   .register {
-   color: $button-color; 
+   color: $link-color; 
   }
 }
 
@@ -109,11 +109,10 @@ label {
   margin-bottom: 5%;
   
   button {
-    width: 30%;
+    width: 25%;
     margin-top: 10px;
     margin-bottom: 10px;
   }
-
 }
 
 .dashboard-table {
@@ -128,8 +127,6 @@ label {
   .count {
     font-size: 1.4rem;
   }
-
-
 
 }
 
@@ -212,4 +209,115 @@ label {
 
 .center {
   text-align: center;
+}
+
+.pull-right {
+  float: right;
+  margin-bottom: 30px;
+  button {
+    width: 100%;
+  }
+}
+
+.pull-left {
+  float: left;
+}
+
+.arrow_box {
+	position: relative;
+	background: $gray;
+  border: 4px solid #c2e1f5;
+  height: 100px;
+  text-align: center;
+  content: "Lack of Trust"
+}
+
+.arrow_box:after, .arrow_box:before {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: "  ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-left-color: $gray;
+	border-width: 30px;
+	margin-top: -30px;
+}
+.arrow_box:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-left-color: $tertiary-color;
+	border-width: 36px;
+	margin-top: -36px;
+}
+
+.box-entry {
+  color: $primary-color;
+  text-align: center;
+  font-size: 20px;
+  line-height: 20pxpx;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  padding: 0;
+  display: block;
+  margin-block-start: 1.5em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.home-component {
+  button {
+    margin: 5px;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 1.4rem;
+    margin: 20px;
+  }
+
+  a {
+    color: $link-color;
+  }
+  
+  
+  li {
+    list-style-type: none;
+    font-size: 1.3rem;
+  }
+
+  ul {
+    padding-inline-start: 10px;
+    padding-inline-end: 10px;
+  }
+
+  strong {
+    color: $secondary-color;
+  }
+
+  h1 {
+    color: $gray;
+    margin-top: 10px;
+  }
+
+  hr {
+    border: 0;
+    height: 3px;
+    background-image: linear-gradient(to right, rgba(26, 24, 24, 0), rgba(26, 24, 24, 0.75), rgba(26, 24, 26, 0));
+  }
+
+  .dashboard-page {
+    min-height: 500px;
+    background-color: $primary-color;
+  }
+
+
 }

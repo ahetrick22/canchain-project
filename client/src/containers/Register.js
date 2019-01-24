@@ -78,7 +78,7 @@ class Register extends Component {
         accountType: this.state.accountType
       } 
       await this.props.signup(data)
-      await this.props.history.push('/');
+      await this.props.history.push('/login');
     }
   }
 
@@ -93,8 +93,8 @@ class Register extends Component {
        <h1>Create New Account </h1>
        <div role="form">
        <div className="form-group">
-          <label>Center Name</label>
-             <input type='text' placeholder="Center Name" value={this.state.centerName}
+          <label>Location Name</label>
+             <input type='text' placeholder="Location Name" value={this.state.centerName}
       onChange={event => this.onCenterNameChange(event.target.value)}></input>       
       </div>   
       <div className="form-group">
@@ -104,7 +104,7 @@ class Register extends Component {
             </div>   
             <div className="form-group">
               <label>State</label>
-              <input type='text' placeholder="State" value={this.state.state}
+              <input type='text' placeholder="State - 2 letter abbreviation" value={this.state.state}
       onChange={event => this.onStateChange(event.target.value)}></input>
             </div>   
             <div className="form-group">

@@ -15,14 +15,17 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
     "@fortawesome/free-regular-svg-icons": "^5.6.3",
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.2.1",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "jquery": "^3.3.1",
     "jwt-simple": "^0.5.5",
     "mysql": "^2.16.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "popper.js": "^1.14.6",
     "redux-thunk": "^2.3.0",
     "truffle": "^5.0.1"
   }

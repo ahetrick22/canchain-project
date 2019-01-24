@@ -60,8 +60,8 @@ class ChainRecordModal extends Component {
         return (
           <>
           <div className="verify-button" onClick={this.toggle}>Query the Chain</div>
-          <Modal isOpen={this.state.modal} toggle={this.toggle} >
-        <ModalHeader className="chain-record-modal-header" toggle={this.toggle}>Chain Record for Delivery ID #{this.props.deliveryId} {this.props.name ? <> from center: {this.props.name}</> : <></>}</ModalHeader>
+          <Modal className={this.props.className} isOpen={this.state.modal} toggle={this.toggle} >
+        <ModalHeader className="chain-record-modal-header" toggle={this.toggle}>Chain Record for Contract ID #{this.props.contract_id}, Delivery ID #{this.props.deliveryId} {this.props.name ? <> from center: {this.props.name}</> : <></>}</ModalHeader>
             <ModalBody className="chain-record-modal-body">
               {
                 Number(plantBn) === 0 ?

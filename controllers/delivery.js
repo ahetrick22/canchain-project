@@ -8,14 +8,6 @@ const pool  = mysql.createPool({
   database        : 'recycling-project'
 });
 
-exports.getCenterDeliveries = (req, res) => {
-  const { center } = req.params;
-  pool.query(`SELECT * FROM deliveries WHERE \`center_id\`='${center}' ORDER BY date_time DESC`, (err, data) => {
-    if (err) throw err;
-    res.json(data);
-  })
-}
-
 //add a new delivery from a center
 exports.addDelivery = (req, res, next) => {
   const { centerId, contractId, centerCount } = req.body;
@@ -40,17 +32,77 @@ exports.verifyDelivery = (req, res, next) => {
     })
 }
 
-//get all unverified deliveries for the plant to verify them
+//get deliveries from all centers
 exports.getDeliveries = (req, res) => {
-  //send only the unverified ones
-  if (req.query.unverified) {
-    pool.query(`SELECT * FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE deliveries.verified=0 ORDER BY deliveries.date_time DESC`, (err, data) => {
+  //send the unverified
+ if(req.query.unverified) {
+    pool.query(`SELECT deliveries.id AS delivery_id, deliveries.center_id AS center_id, 
+    verified, discrepancy, date_time, contract_id, plant_count, center_count, name, city, state, account_address, username, account_type
+    FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE deliveries.verified=0 ORDER BY deliveries.date_time DESC`, (err, data) => {
       if (err) throw err;
       res.json(data);
     })
-  //send all of them
-  } else {
-    pool.query(`SELECT * FROM deliveries JOIN users ON deliveries.center_id = users.id ORDER BY deliveries.date_time DESC`, (err, data) => {
+  //send the verified
+  } else if (req.query.verified) {
+    pool.query(`SELECT deliveries.id AS delivery_id, deliveries.center_id AS center_id, 
+    verified, discrepancy, date_time, contract_id, plant_count, center_count, name, city, state, account_address, username, account_type
+    FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE deliveries.verified=1 ORDER BY deliveries.date_time DESC`, (err, data) => {
+      if (err) throw err;
+      res.json(data);
+    })
+  //send the ones with discrepancies
+  } else if(req.query.discrepancy) {
+    pool.query(`SELECT deliveries.id AS delivery_id, deliveries.center_id AS center_id, 
+    verified, discrepancy, date_time, contract_id, plant_count, center_count, name, city, state, account_address, username, account_type
+    FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE deliveries.discrepancy > 0 ORDER BY deliveries.date_time DESC`, (err, data) => {
+      if (err) throw err;
+      res.json(data);
+  })
+}
+  else {
+      //send all of them
+    pool.query(`SELECT deliveries.id AS delivery_id, deliveries.center_id AS center_id, 
+    verified, discrepancy, date_time, contract_id, plant_count, center_count, name, city, state, account_address, username, account_type
+    FROM deliveries JOIN users ON deliveries.center_id = users.id ORDER BY deliveries.date_time DESC`, (err, data) => {
+      if (err) throw err;
+      res.json(data);
+    })
+  }
+}
+
+//get deliveries from only a specific center
+exports.getCenterDeliveries = (req, res) => {
+  const { center } = req.params;
+   //send the unverified
+   if(req.query.unverified) {
+    pool.query(`SELECT deliveries.id AS delivery_id, deliveries.center_id AS center_id, 
+    verified, discrepancy, date_time, contract_id, plant_count, center_count, name, city, state, account_address, username, account_type
+    FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE deliveries.verified=0 AND center_id =${center} ORDER BY deliveries.date_time DESC`, (err, data) => {
+      if (err) throw err;
+      res.json(data);
+    })
+  //send the verified
+  } else if (req.query.verified) {
+    pool.query(`SELECT deliveries.id AS delivery_id, deliveries.center_id AS center_id, 
+    verified, discrepancy, date_time, contract_id, plant_count, center_count, name, city, state, account_address, username, account_type
+    FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE deliveries.verified=1 AND center_id =${center} ORDER BY deliveries.date_time DESC`, (err, data) => {
+      if (err) throw err;
+      res.json(data);
+    })
+  //send the ones with discrepancies
+  } else if(req.query.discrepancy) {
+    pool.query(`SELECT deliveries.id AS delivery_id, deliveries.center_id AS center_id, 
+    verified, discrepancy, date_time, contract_id, plant_count, center_count, name, city, state, account_address, username, account_type
+    FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE deliveries.discrepancy > 0 AND center_id =${center} ORDER BY deliveries.date_time DESC`, (err, data) => {
+      if (err) throw err;
+      res.json(data);
+  })
+}
+  else {
+      //send all of them
+    pool.query(`SELECT deliveries.id AS delivery_id, deliveries.center_id AS center_id, 
+    verified, discrepancy, date_time, contract_id, plant_count, center_count, name, city, state, account_address, username, account_type
+    FROM deliveries JOIN users ON deliveries.center_id = users.id WHERE center_id =${center} ORDER BY deliveries.date_time DESC`, (err, data) => {
       if (err) throw err;
       res.json(data);
     })

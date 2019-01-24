@@ -5,24 +5,32 @@ import PropTypes from 'prop-types';
 import DashboardTable from './DashboardTable';
 import FullModal from './FullModal';
 import { Redirect } from 'react-router-dom';
+import CenterDashboardHeader from './CenterDashboardHeader';
+import PlantDashboardHeader from './PlantDashboardHeader';
 
+//can either be a center dashboard or plant dashboard - there are few differences in conditionals
 class Dashboard extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      web3AccountMatch: true
+      web3AccountMatch: true,
+      filterChoice: ''
     }
     this.contract = context.drizzle.contracts.BagCount;
   }
   
-
+  
   componentDidMount = () => {
+    //give the logged in user time to be assigned
     if (this.props.user) {
       if (this.props.user.account_type === "Center") {
-        this.props.getDeliveriesForSingleCenter(this.props.user.id);
+        //if it's a center, get all the deliveries for it, or else get all the deliveries total
+        this.props.setDeliveryParams(`/${this.props.user.id}`)
       } else {
-        this.props.getDeliveriesForPlant();
+        this.props.setDeliveryParams('')
       }
+      this.props.getDeliveries(this.props.paramStr);
+      //make sure the user's Metamask account is correct
       this.context.drizzle.web3.eth.getAccounts().then(result => {
         if (this.props.user.account_address !== result[0].toLowerCase()) {
           this.setState( {web3AccountMatch: false} )
@@ -31,6 +39,7 @@ class Dashboard extends Component {
     }
   }
 
+  //used by center only to create a new delivery
   createDelivery = async (count) => {
     this.props.toggleFetch();
     //the center that is creating the delivery
@@ -44,12 +53,12 @@ class Dashboard extends Component {
         //this is the delivery id from the contract, which will need to be referenced for the plant to verify it
         deliveryInfo.contractId = data.events.LogCenterDelivery.returnValues.id;
         //send the delivery to the SQL DB
-        await this.props.createDelivery(deliveryInfo);
+        this.props.createDelivery(deliveryInfo);
       })
-    await this.props.getDeliveriesForSingleCenter(this.props.user.id);
   }
 
-  verifyDelivery = (contract_id, count) => {
+  //used by plant accounts only to verify center deliveries
+  verifyDeliveryContract = async (contract_id, count) => {
     this.props.toggleFetch();
     //show them a modal to be able to put in the plant count & verify
     //send the verifyCount method & also update the DB
@@ -57,14 +66,15 @@ class Dashboard extends Component {
       contract_id : contract_id,
       plantCount: count
     }
-    this.contract.methods.verifyDelivery(contract_id, count).send()
-      .then(data => {
+    await this.contract.methods.verifyDelivery(contract_id, count).send()
+      .then(async (data) => {
         //this is the discrepancy emitted from the contract
         deliveryVerification.discrepancy = data.events.Discrepancy.returnValues.difference;
         this.props.verifyDelivery(deliveryVerification);
       })
   }
 
+  //passed down to each table entry to allow verification on the chain - this keeps the contract access in one place
   viewChainRecord = async (contract_id) => {
     let chainRecord = {};
     await this.contract.methods.getDelivery(contract_id).call()
@@ -105,28 +115,36 @@ class Dashboard extends Component {
            <div className ="container">
             <div className = "row">
               <div className="col dashboard-page">
-              <h1><strong>{account_type} Dashboard</strong></h1> 
-            {account_type === "Center" ?  
-            <>          
-            <FullModal account_type={account_type} onClickFunc={this.createDelivery} buttonLabel="Create New Delivery"/>          
-            <DashboardTable viewChainRecord={this.viewChainRecord} account_type={account_type} deliveries={this.props.deliveries} /> 
-            </> 
-            :
-            <DashboardTable verifyDelivery={this.verifyDelivery} viewChainRecord={this.viewChainRecord} account_type={account_type} deliveries={this.props.deliveries} />
-            }
+                <h1><strong>{account_type} Dashboard</strong></h1> 
+               
+                {account_type === "Center" ?  
+                <>  
+                <CenterDashboardHeader />
+                <FullModal account_type={account_type} onClickFunc={this.createDelivery} buttonLabel="Create New Delivery"/>          
+                <DashboardTable viewChainRecord={this.viewChainRecord}  /> 
+                </> 
+                
+                
+                :
+                <>
+                <PlantDashboardHeader />
+                <DashboardTable verifyDeliveryContract={this.verifyDeliveryContract} viewChainRecord={this.viewChainRecord}  />
+                </>
+                }
+              </div>
             </div>
-      </div>
-      </div>
-      </div>
+          </div>
+        </div>
       )
-  }
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
     user: state.authReducer.user,
-    deliveries: state.deliveryReducer.deliveries
+    deliveries: state.deliveryReducer.deliveries,
+    paramStr: state.deliveryReducer.paramStr
   }
 }
 

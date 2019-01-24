@@ -19,7 +19,6 @@ class FullModal extends React.Component {
 
   //execute the delivery creation and close the modal
   primaryButtonClick = () => {
-    console.log(this.props);
     if (this.props.contract_id) {
       this.props.onClickFunc(this.props.contract_id, this.state.count);
     } else {
@@ -36,16 +35,16 @@ class FullModal extends React.Component {
   render() {
     return (
       <div>
-        <div className="verify-button" onClick={this.toggle}>{this.props.buttonLabel}</div>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle} className="center">Create New Delivery</ModalHeader>
-          <ModalBody>
+        <div className="btn btn-primary" onClick={this.toggle}>{this.props.buttonLabel}</div>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} >
+          <ModalHeader className="chain-record-modal-header" toggle={this.toggle}>{this.props.account_type=== "Center" ? 'Create New Delivery' : `Verify Delivery # ${this.props.id}`}</ModalHeader>
+          <ModalBody className="chain-record-modal-body">
             <label>Enter your count:</label>
             <input value={this.state.count}
             onChange={e => this.onInputChange(e.target.value)} /> 
           </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.primaryButtonClick}>Submit Delivery</Button>{' '}
+          <ModalFooter className="chain-record-modal-footer">
+            <Button color="primary" onClick={this.primaryButtonClick}>{this.props.account_type=== "Center" ? 'Submit This Delivery' : `Verify This Delivery`}</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>

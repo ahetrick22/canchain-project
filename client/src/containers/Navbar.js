@@ -11,7 +11,7 @@ class Navbar extends Component {
   }
 
   render () {
-      if (this.props.user) {
+      if (this.props.user && Object.keys(this.props.user).length !== 0) {
         return (
         <nav className="navbar navbar-light">
         <Link to="/" className="navbar-brand mr-auto logo">

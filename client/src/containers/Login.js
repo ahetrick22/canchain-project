@@ -25,13 +25,12 @@ class Login extends Component {
       //log them in, and then direct to correct dashboard
       this.props.login(data
         , () => {
-        console.log('user in login', this.props.user)
           this.props.history.push(`/dashboard`);
       });
   }
 
     render() {
-      if (this.props.user) {
+      if (this.props.user && Object.keys(this.props.user).length !== 0) {
         return <Redirect to="/dashboard" />
       }
         return(
