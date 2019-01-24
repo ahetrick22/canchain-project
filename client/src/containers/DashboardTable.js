@@ -53,7 +53,7 @@ class DashboardTable extends Component {
           <td className = "align-middle count">{center_count}</td>
           <td className = "align-middle count">{verified ? plant_count : '-'}</td>
           <td className = "align-middle count">{verified ? discrepancy : '-'}</td>
-          <td className = "align-middle"><ChainRecordModal className="modal-lg modal-dialog modal-dialog-centered" dbDiscrepancy={discrepancy} deliveryId={delivery_id} contract_id={contract_id} viewChainRecord={viewChainRecord}/></td>
+          <td className = "align-middle"><ChainRecordModal className="modal-lg modal-dialog modal-dialog-centered" dbDiscrepancy={discrepancy} deliveryId={delivery_id} contract_id={contract_id} viewChainRecord={viewChainRecord} name={name}/></td>
         </tr>
       )
     } else {

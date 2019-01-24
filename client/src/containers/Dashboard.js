@@ -13,8 +13,7 @@ class Dashboard extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      web3AccountMatch: true,
-      filterChoice: ''
+      web3AccountMatch: true
     }
     this.contract = context.drizzle.contracts.BagCount;
   }

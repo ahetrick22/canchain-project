@@ -30,7 +30,6 @@ export const signup = (data, callback) => dispatch => {
     .then(res => res.json()
     .then(data => {
       dispatch({ type: AUTH_USER, payload: data });
-      // dispatch({type: SET_USER, payload: data.user })
       localStorage.setItem('token', data.token)
       callback();
     })
@@ -91,22 +90,6 @@ export const toggleFetch = () => {
     type: FETCHING_DATA
   }
 }
-
-// export const getDeliveriesForSingleCenter = (userId, params) => dispatch => {
-//   fetch(`/deliveries/${userId}?${params}`,
-//   {
-//     headers: {
-//     "Authorization": `Bearer ${localStorage.getItem('token')}`,
-//     }
-//   })
-//   .then(res => res.json())
-//     .then(data => {
-//       dispatch({type: GET_DELIVERIES, payload: data});
-//       })
-//   .catch(error => {
-//     console.log(error);
-//   });  
-// }
 
 export const getDeliveries = params => dispatch => {
   fetch(`/deliveries${params}`, 
