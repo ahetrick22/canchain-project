@@ -19,16 +19,16 @@ class Dashboard extends Component {
   }
   
   
-  componentDidMount = () => {
+  componentDidMount = async () => {
     //give the logged in user time to be assigned
     if (this.props.user) {
       if (this.props.user.account_type === "Center") {
         //if it's a center, get all the deliveries for it, or else get all the deliveries total
-        this.props.setDeliveryParams(`/${this.props.user.id}`)
+        await this.props.setDeliveryParams(`/${this.props.user.id}`)
       } else {
-        this.props.setDeliveryParams('')
+        await this.props.setDeliveryParams('')
       }
-      this.props.getDeliveries(this.props.paramStr);
+      await this.props.getDeliveries(this.props.paramStr);
       //make sure the user's Metamask account is correct
       this.context.drizzle.web3.eth.getAccounts().then(result => {
         if (this.props.user.account_address !== result[0].toLowerCase()) {
@@ -124,12 +124,13 @@ class Dashboard extends Component {
                 </> 
                 
                 
-                :
+                : account_type === "Plant" ?
                 <>
                 <PlantDashboardHeader />
                 <DashboardTable verifyDeliveryContract={this.verifyDeliveryContract} viewChainRecord={this.viewChainRecord}  />
                 </>
-                }
+                : <div></div>   
+              }
               </div>
             </div>
           </div>

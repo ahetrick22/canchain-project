@@ -57,11 +57,12 @@ exports.signup = async (req, res, next) => {
         if (err) { return next(err) }
         const { salt, hash } = await setPassword(password);
         await pool.query(`UPDATE users SET \`salt\`='${salt}', \`hash\`='${hash}' WHERE \`username\`='${username}'`, async (err, result) => {
-         // Respond to request indicating the user was created
-        await res.json({ token: tokenForUser(user) })
+          await pool.query(`SELECT * FROM users WHERE \`username\`='${username}'`, function(err, existingUser) {
+            if (err) { return next(err) }
+           res.json({ token: tokenForUser(existingUser) })
         })
       })
 
-    
+    })    
 
   }
