@@ -16,14 +16,26 @@ export const login = (data, callback) => dispatch => {
     })
     .then(res => res.json())
     .then(async (jsonRes) => {
-      localStorage.setItem('token', jsonRes.token)
-      await dispatch({
-        type: AUTH_USER,
-        payload: jsonRes
-      });
-      await callback();
+      if (jsonRes.error) {
+        dispatch({
+          type: AUTH_ERROR,
+          payload: 'Error signing in'
+        });
+      } else {
+        localStorage.setItem('token', jsonRes.token)
+        await dispatch({
+          type: AUTH_USER,
+          payload: jsonRes
+        });
+        await dispatch({
+          type: AUTH_ERROR,
+          payload: ''
+        })
+        await callback();
+      }
     })
     .catch(err => {
+      console.log(err);
       dispatch({
         type: AUTH_ERROR,
         payload: 'Error signing in'

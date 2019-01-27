@@ -40,6 +40,7 @@
 
 .dashboard-spinner {
   font-size: 2.0rem;
+  width: 100%;
 }
 
 %status-circle {
@@ -77,4 +78,34 @@
 
 .no-delivery-alert {
   margin-top: 75px;
+}
+
+.front-graphic {
+  font-size: 2.0rem;
+}
+
+.icons {
+  font-size: 2.5rem; 
+}
+
+.divider-icon {
+  font-size: 1.5rem;
+}
+
+.faicon {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.half-width {
+  width: 45%;
+  display:inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.smaller-button-width {
+  button {
+    width: 50%;
+  }
 }

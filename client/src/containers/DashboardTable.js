@@ -16,7 +16,7 @@ class DashboardTable extends Component {
         {this.props.deliveries.length === 0 ? <div className="alert alert-info no-delivery-alert" >
       No deliveries found with current filters
       </div> : <></>}
-      {this.props.isFetching ? <span className="dashboard-spinner">Recording your transaction on the chain... <FontAwesomeIcon icon={faSpinner} spin /></span> :
+      {this.props.isFetching ? <div className="dashboard-spinner">Recording your transaction on the chain... <FontAwesomeIcon icon={faSpinner} spin /></div> :
       <table className="table table-dark dashboard-table table-responsive-md">
         <thead>
           {tableHead(this.props.user.account_type)}

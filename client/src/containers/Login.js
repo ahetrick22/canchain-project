@@ -42,6 +42,9 @@ class Login extends Component {
           <h1>CanChain</h1>
           <h4>A distributed ledger system for secure, verifiable data</h4>
           <div>
+          {this.props.authError ? <div className="alert alert-danger" role="alert">
+            Invalid username/password - please try again.
+          </div> : <></>}
           <label><strong>Username:</strong></label>
            <input type='text' value={this.state.username}
     onChange={event => this.onUsernameInputChange(event.target.value)}></input>  
@@ -66,7 +69,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    authError: state.authReducer.errorMessage
     }
 }
 

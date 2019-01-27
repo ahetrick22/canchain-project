@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faHandshake, faLock, faArrowCircleRight} from '@fortawesome/free-solid-svg-icons';
 
 //informational component which is shown when page first loads (buttons allow cycling through Home Pages 1-5)
 const HomePage1 = ({ increasePageNum }) => {
@@ -20,10 +22,18 @@ const HomePage1 = ({ increasePageNum }) => {
               to interact with a private blockchain. It uses a recycling network as an example
               to demonstrate the capabilities.
             </p>
-            <p>
-              Transparency ------> Security
-            </p>
           </div>
+        </div>
+        <div className="row">
+        <div className="col">
+        <div className="front-graphic">
+            <strong className="front-text">Transparency</strong> <br /> <span className="icons">
+              <FontAwesomeIcon icon={faHandshake} className='faicon'/>
+            <FontAwesomeIcon icon={faArrowCircleRight} className='faicon'/>
+            <FontAwesomeIcon icon={faLock} className='faicon'/></span><br />
+              <strong className="front-text">Security</strong>
+        </div>
+        </div>
         </div>
         <button className="btn btn-lg btn-primary" onClick={increasePageNum}>Tell me More</button>
         <Link to="/login">

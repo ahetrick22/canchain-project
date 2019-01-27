@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+const moment = require('moment');
 
 class FullModal extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class FullModal extends React.Component {
           {this.state.invalidCount ? <div className="alert alert-danger" role="alert">
                 Count must be a number. Please try again.
                 </div> : <></>}
+                <p>This transaction will be recorded on the chain on {moment(Date.now()).format('MMM Do, YYYY, hh:mm a')}.</p>
             <label>Enter your count:</label>
             <input value={this.state.count}
             onChange={e => this.onInputChange(e.target.value)} /> 
