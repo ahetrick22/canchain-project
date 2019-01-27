@@ -29,7 +29,7 @@ contract BagCount {
         _;
     }
     
-    //events are used to access return values
+    //events are used to access return values in Drizzle
     event LogCenterDelivery(
         uint id
     );
@@ -55,7 +55,7 @@ contract BagCount {
         deliveryId = 0;
     }
 
-    //called by centers to record a count, returns the index of that count
+    //called by centers to record a count, returns the index of that count (contract_id)
     function recordCount(uint newCount) public returns(uint) {
         Delivery memory newDelivery = Delivery({
             center: msg.sender,
@@ -73,7 +73,7 @@ contract BagCount {
         return deliveryId;
     }
     
-    //plant can verify a delivery
+    //plant can verify a delivery, which returns the discrepancy to be recorded in the DB
     function verifyDelivery(uint requestedId, uint verifiedCount) public restricted returns(uint) {
         Delivery storage delivery = deliveries[requestedId];
         uint centerCount = delivery.bagCount;

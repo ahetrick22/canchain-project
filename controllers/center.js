@@ -1,11 +1,12 @@
 const mysql = require('mysql');
+const keys = require('../config/keys')
 
 const pool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'recycling',
-  password        : 'password',
-  database        : 'recycling-project'
+  connectionLimit : keys.SQLCONNLIMIT,
+  host            : keys.SQLHOST,
+  user            : keys.SQLUSERNAME,
+  password        : keys.SQLPASSWORD,
+  database        : keys.SQLSCHEMA
 });
 
 //get all centers

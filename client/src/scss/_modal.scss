@@ -1,0 +1,26 @@
+%modal {
+  background-color: $gray;
+  font-size: 1.2rem;
+  color: $primary-color;
+}
+
+.chain-record-modal-header {
+  @extend %modal;
+  text-align: center;
+}
+
+.chain-record-modal-body {
+  @extend %modal;
+
+  label {
+    font-weight: bold;
+  }
+}
+
+.chain-record-modal-footer {
+  @extend %modal;
+
+  button {
+    width: 150px;
+  }
+}

@@ -7,7 +7,6 @@ import { Button } from 'reactstrap';
 class Register extends Component {
 
   constructor(props, context) {
-
     super(props);
     this.contracts = context.drizzle.contracts;
 
@@ -87,9 +86,9 @@ class Register extends Component {
       <div className='main-class'>
       <div className ="container">
       <div className = "row">
-      <div className = "col-2">
+      <div className = "col-1">
       </div>
-      <div className="col-8 register-page">
+      <div className="col-10 register-page">
        <h1>Create New Account </h1>
        <div role="form">
        <div className="form-group">
@@ -147,7 +146,7 @@ class Register extends Component {
              <br />
              </div>
              </div>
-            <div className = "col-2">
+            <div className = "col-1">
             </div>
             </div>
             </div>
@@ -155,6 +154,7 @@ class Register extends Component {
   }
 }
 
+//Register must have access to current provider to assign the correct address
 Register.contextTypes = {
   drizzle: PropTypes.object
 }

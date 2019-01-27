@@ -1,8 +1,9 @@
 import React from 'react';
 const moment = require('moment');
 
-
+//chain record that shows up after a plant has verified a delivery
 const PlantVerifyModal = props => {
+  //props sent come from the viewChainRecord function, which calls the contract to get a delivery's info
   const {centerAddress,
     plantAddress,
     centerCount,

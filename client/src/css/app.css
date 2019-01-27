@@ -1,0 +1,265 @@
+@import url("https://fonts.googleapis.com/css?family=Rokkitt");
+@import url("https://fonts.googleapis.com/css?family=Fugaz+One");
+body {
+  background-image: url(https://images.pexels.com/photos/3008/drinks-supermarket-cans-beverage.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+  background-size: stretch;
+  font-family: "Rokkitt", serif;
+}
+
+.logo {
+  font-family: "Fugaz One", cursive;
+}
+
+.main-class {
+  height: 100%;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+label {
+  padding-right: 15px;
+  font-size: 1.3rem;
+}
+
+.fa-size {
+  font-size: 24px;
+}
+
+.center {
+  text-align: center;
+}
+
+.pull-right {
+  float: right;
+  margin-bottom: 10px;
+  margin-right: 10%;
+}
+
+.pull-left {
+  float: left;
+  margin-bottom: 10px;
+  margin-left: 10%;
+}
+
+.create-delivery {
+  margin-top: 10px;
+}
+
+.center-filter {
+  float: right;
+  margin-right: 10%;
+}
+
+.plant-filter {
+  float: right;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+nav {
+  background-color: rgba(76, 195, 204, 0.6);
+  color: rgba(5, 47, 69, 0.9);
+  margin-bottom: 10px;
+}
+nav .nav-welcome {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+nav li {
+  list-style-type: none;
+}
+
+.chain-record-modal-footer, .chain-record-modal-body, .chain-record-modal-header {
+  background-color: #C0C0C0;
+  font-size: 1.2rem;
+  color: rgba(5, 47, 69, 0.9);
+}
+
+.chain-record-modal-header {
+  text-align: center;
+}
+
+.chain-record-modal-body label {
+  font-weight: bold;
+}
+
+.chain-record-modal-footer button {
+  width: 150px;
+}
+
+.login-card {
+  text-align: center;
+  align-items: center;
+  background-color: rgba(5, 47, 69, 0.9);
+  color: #C0C0C0;
+  border-radius: 30%;
+  box-shadow: 2px 4px 6px 8px #C0C0C0;
+}
+.login-card button {
+  margin-top: 10px;
+}
+.login-card h1 {
+  font-family: "Fugaz One", cursive;
+}
+.login-card .new-user {
+  font-size: 1.5rem;
+}
+.login-card .register {
+  color: #FF9700;
+}
+.login-card p {
+  margin: 10px;
+}
+
+.register-page {
+  text-align: center;
+  background-color: rgba(5, 47, 69, 0.9);
+  color: #C0C0C0;
+  box-shadow: 2px 4px 6px 8px #C0C0C0;
+  align-items: center;
+  margin-bottom: 5%;
+}
+.register-page input {
+  width: 95%;
+}
+.register-page .radio {
+  width: 20%;
+}
+.register-page button {
+  width: 30%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.home-component button {
+  margin: 5px;
+  margin-bottom: 15px;
+  width: 80%;
+}
+.home-component p {
+  font-size: 1.4rem;
+  margin: 20px;
+}
+.home-component a {
+  color: #FF9700;
+}
+.home-component li {
+  list-style-type: none;
+  font-size: 1.3rem;
+}
+.home-component ul {
+  padding-inline-start: 10px;
+  padding-inline-end: 10px;
+}
+.home-component strong {
+  color: #4cc3ff;
+}
+.home-component h1 {
+  color: #C0C0C0;
+  margin-top: 10px;
+}
+.home-component hr {
+  border: 0;
+  height: 3px;
+  background-image: linear-gradient(to right, rgba(26, 24, 24, 0), rgba(26, 24, 24, 0.75), rgba(26, 24, 26, 0));
+}
+.home-component .upsize {
+  font-size: 3rem;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.home-component .handshake {
+  float: right;
+}
+.home-component .lock {
+  float: left;
+}
+.home-component .handshake-text {
+  font-size: 2.5em;
+}
+.home-component .arrow {
+  margin-top: 15%;
+}
+.home-component .lock-text {
+  font-size: 2.5em;
+}
+
+.smaller-button-width button {
+  width: 50%;
+}
+
+.dashboard-page {
+  text-align: center;
+  background-color: rgba(5, 47, 69, 0.9);
+  color: #C0C0C0;
+  box-shadow: 2px 4px 6px 8px #C0C0C0;
+  align-items: center;
+  margin-bottom: 5%;
+}
+.dashboard-page button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.dashboard-page p {
+  font-size: 1.4rem;
+}
+
+.dashboard-table {
+  color: #4cc3ff;
+  font-family: serif;
+  font-weight: lighter;
+  width: 90%;
+  margin-left: 5%;
+}
+.dashboard-table thead {
+  text-align: center;
+  align-items: center;
+}
+.dashboard-table tr {
+  justify-items: center;
+}
+.dashboard-table .count {
+  font-size: 1.4rem;
+}
+
+.dashboard-spinner {
+  font-size: 2rem;
+}
+
+.yellow-circle, .green-circle, .red-circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.red-circle {
+  background-color: red;
+}
+
+.green-circle {
+  background-color: green;
+}
+
+.yellow-circle {
+  background-color: yellow;
+}
+
+.verify-button {
+  background-color: rgba(76, 195, 204, 0.6);
+  color: #C0C0C0;
+  padding: 5px;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px 2px #C0C0C0;
+  color: white;
+  margin: 0 10%;
+  max-width: 150px;
+}
+
+.no-delivery-alert {
+  margin-top: 75px;
+}
+
+/*# sourceMappingURL=app.css.map */

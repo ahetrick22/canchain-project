@@ -5,6 +5,7 @@ import CenterVerifyModal from '../components/CenterVerifyModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
+//creates the modal that shows a full chain record
 class ChainRecordModal extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +24,9 @@ class ChainRecordModal extends Component {
   }
 
   componentDidMount = async () => {
+    //view the chain record by calling the contract function at the selected contract ID (passed from the row)
     const chainRecord = await this.props.viewChainRecord(this.props.contract_id);
+    //once it comes, grab all the data and set it to the state of this modal
     const { centerAddress, plantAddress, centerCount, plantCount, centerDt, plantDt, centerBn, plantBn } = await chainRecord; 
     await this.setState({
       centerAddress,
@@ -59,7 +62,7 @@ class ChainRecordModal extends Component {
     if (centerBn !== 0) {
         return (
           <>
-          <div className="verify-button" onClick={this.toggle}>Query the Chain</div>
+          <div className="btn btn-info" onClick={this.toggle}>Query Chain</div>
           <Modal className={this.props.className} isOpen={this.state.modal} toggle={this.toggle} >
         <ModalHeader className="chain-record-modal-header" toggle={this.toggle}>Chain Record for Contract ID #{this.props.contract_id}, Delivery ID #{this.props.deliveryId} {this.props.name ? <> from center: {this.props.name}</> : <></>}</ModalHeader>
             <ModalBody className="chain-record-modal-body">

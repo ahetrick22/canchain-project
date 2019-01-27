@@ -45,6 +45,7 @@ const store = configureStore({
 })
 
 // pass in the drizzle instance and its options around the standard provider
+//loading container won't let the app load if there's no web3 injection detected
 ReactDOM.render((
   <DrizzleProvider options = {options} >
     <Provider store={store}>

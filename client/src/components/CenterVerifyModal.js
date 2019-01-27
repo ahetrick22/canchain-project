@@ -1,6 +1,7 @@
 import React from 'react';
 const moment = require('moment');
 
+//chain record that shows up before a plant has verified a delivery
 const CenterVerifyModal= props => {
   const {centerAddress,
     centerDt,

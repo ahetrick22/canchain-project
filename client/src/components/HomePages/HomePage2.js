@@ -1,5 +1,6 @@
 import React from 'react';
 
+//informational component which is shown when page first loads (buttons allow cycling through Home Pages 1-5)
 const HomePage2 = ({ increasePageNum, decreasePageNum }) => {
   return (
   <div className ="container">
@@ -10,9 +11,9 @@ const HomePage2 = ({ increasePageNum, decreasePageNum }) => {
             <p>Recycling in deposit states (like NY, MA, OR, and more):
             </p>
             <ul>
-              <li><strong>Distributors</strong> send products to <strong>stores</strong> and pay deposits to recycling plants</li>
+            <li><strong>Distributors</strong> send products to <strong>stores</strong> and pay deposits to <strong>recycling plants</strong></li>
               <hr />
-              <li><strong>Stores</strong> pay deposits to <strong>distributors</strong> and sell to customers</li>
+              <li><strong>Stores</strong> pay deposits to <strong>distributors</strong> and sell to <strong>customers</strong></li>
               <hr />
               <li><strong>Customers</strong> pay deposits to <strong>stores</strong> for products and redeem items at <strong>redemption centers</strong> </li>
               <hr />
@@ -24,8 +25,8 @@ const HomePage2 = ({ increasePageNum, decreasePageNum }) => {
               </ul>
             <p>
               </p>        
-              <button className = "btn btn-sm btn-secondary" onClick={decreasePageNum}>Wait, take me back</button>
               <button className = "btn btn-lg btn-primary" onClick={increasePageNum}>How about some transparency?</button>
+              <button className = "btn btn-sm btn-secondary" onClick={decreasePageNum}>Wait, take me back</button>
          </div>
        </div>
       </div>

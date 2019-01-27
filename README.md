@@ -1,9 +1,11 @@
-Current requirements to run:
--Ganache or ganache-cli runningon localhost:8545
--Metamask on localhost:8545
+# CanChain
 
-Compile and migrate contracts on the test network (requires truffle):
--npm run mig
+CanChain is a demo app created with the intention of using a private blockchain. A blockchain version is not currently deployed, but the off-chain demo is available at canchain.herokuapp.com.  It uses a Node/MySQL backend and a React/Redux frontend.
 
-Run the server and the client:
--npm run dev
+If you'd like to run the on-chain version locally, you'll need the [Metamask](www.metamask.io) browser extension and [Ganache](https://truffleframework.com/docs/ganache/quickstart), from the Truffle Suite(www.truffleframework.com).
+
+Connect Metamask to your Ganache blockchain once you have it running and make sure that the port specified in truffle-config.js is the same one. 
+
+Ensure you have run <npm install> in both the root folder and the client folder.
+
+In the root folder, use <truffle migrate> to compile and migrate your contracts. Then <npm run dev> will launch the app.

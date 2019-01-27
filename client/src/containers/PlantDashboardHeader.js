@@ -14,8 +14,9 @@ class PlantDashboardHeader extends Component {
     filterDropdownOpen: false
   };
 
-  //get the centers to build the dropdown
+  //get the centers to build the filter dropdown
   componentDidMount = () => {
+    this.setState({centers: []});
     fetch('/centers', {
       headers: {
       "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -28,24 +29,24 @@ class PlantDashboardHeader extends Component {
       .catch(error => {
         console.log(error);
       });
+  }
 
-    }
+  //add any params about delivery status to the delivery request
+  updateDeliveryView = async (viewOption) => {
+    await this.setState({selectedDeliveryView: viewOption});
+    await this.getUpdatedDeliveries();
+  }
 
-    //add any params about delivery status to the delivery request
-    updateDeliveryView = async (viewOption) => {
-      await this.setState({selectedDeliveryView: viewOption});
-      await this.getUpdatedDeliveries();
-    }
+  //add params about which center to view to the delivery request
+  updateSelectedCenter = async (centerOption) => {
+    await this.setState({selectedCenter: centerOption});
+    await this.getUpdatedDeliveries();
+  }
 
-    //add params about which center to view to the delivery request
-    updateSelectedCenter = async (centerOption) => {
-      await this.setState({selectedCenter: centerOption});
-      await this.getUpdatedDeliveries();
-    }
-
-    getUpdatedDeliveries = () => {
-      this.props.getDeliveries(`${this.state.selectedCenter}${this.state.selectedDeliveryView}`);
-    }
+  //fetch the deliveries based on the newly set parameter string
+  getUpdatedDeliveries = () => {
+    this.props.getDeliveries(`${this.state.selectedCenter}${this.state.selectedDeliveryView}`);
+  }
   
   //toggle the dropdown views
   centerToggle = () => {
@@ -63,7 +64,8 @@ class PlantDashboardHeader extends Component {
   render () {
     return (
       <>
-    <ButtonDropdown isOpen={this.state.centerDropdownOpen} toggle={this.centerToggle}>
+       <p className="center">New verification: wait for notification that it has mined, and then get mined transactions.</p>
+    <ButtonDropdown direction="right" className="pull-left" isOpen={this.state.centerDropdownOpen} toggle={this.centerToggle}>
         <DropdownToggle caret>
         Select a Center
         </DropdownToggle>
@@ -73,7 +75,7 @@ class PlantDashboardHeader extends Component {
         </DropdownMenu>
       </ButtonDropdown>
 
-        <ButtonDropdown isOpen={this.state.filterDropdownOpen} toggle={this.filterToggle}>
+      <ButtonDropdown direction="left" className="pull-right" isOpen={this.state.filterDropdownOpen} toggle={this.filterToggle}>
         <DropdownToggle caret>
         Filter
         </DropdownToggle>
@@ -85,7 +87,7 @@ class PlantDashboardHeader extends Component {
         </DropdownMenu>
       </ButtonDropdown>
      
-     <button className="btn btn-primary pull-left" onClick={() => this.props.getDeliveries(this.props.paramStr)}>Get Latest Mined Transactions</button>
+     <button className="btn btn-primary create-delivery" onClick={() => this.props.getDeliveries(this.props.paramStr)}>Get Mined Transactions</button>
     </>
     )
   }
@@ -104,6 +106,5 @@ const mapStateToProps = state => {
     paramStr: state.deliveryReducer.paramStr
   }
 }
-
 
 export default connect(mapStateToProps, actions)(PlantDashboardHeader);

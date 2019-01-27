@@ -1,0 +1,29 @@
+.login-card {
+  text-align: center;
+  align-items: center;
+  background-color: $primary-color;
+  color: $gray;
+  border-radius: 30%;
+  box-shadow: 2px 4px 6px 8px $gray;
+
+  button {
+    margin-top: 10px;
+  }
+
+  h1 {
+    font-family: $logo-font;
+  }
+
+  .new-user {
+    font-size: 1.5rem;
+  }
+
+  .register {
+   color: $link-color; 
+  }
+
+  p {
+    margin: 10px;
+  }
+
+}

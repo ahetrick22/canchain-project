@@ -5,33 +5,32 @@ const LocalStrategy = require('passport-local')
 const crypto = require('crypto');
 const mysql = require('mysql');
 const keys = require('../config/keys');
+
 const pool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'recycling',
-  password        : 'password',
-  database        : 'recycling-project'
+  connectionLimit : keys.SQLCONNLIMIT,
+  host            : keys.SQLHOST,
+  user            : keys.SQLUSERNAME,
+  password        : keys.SQLPASSWORD,
+  database        : keys.SQLSCHEMA
 });
 
+//make sure the user's password is valid
 const validPassword = (password, salt, userHash) => {
   const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
   return userHash == hash;
 }
 
-const localOptions = {};
 // Create local strategy
-const localLogin = new LocalStrategy(localOptions, (username, password, done) => {
+const localLogin = new LocalStrategy((username, password, done) => {
   // Verify this username and password, call done with the user
   // if it is the correct email and password
   // otherwise, call done with false
   pool.query(`SELECT * FROM users WHERE \`username\` = '${username}'`, (err, user) => {
     if (err) { return done(err); }
     if (user.length === 0) { return done(null, false) }
-
     if (!validPassword(password, user[0].salt, user[0].hash)) {
       return done(null, false, { message: 'Incorrect password.' })
     }
-
     return done(null, user);
   })
 })

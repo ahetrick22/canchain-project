@@ -1,0 +1,22 @@
+.register-page {
+  text-align: center;
+  background-color: $primary-color; 
+  color: $gray;
+  box-shadow: 2px 4px 6px 8px $gray;
+  align-items: center;
+  margin-bottom: 5%;
+
+  input {
+    width: 95%;
+  }
+
+  .radio {
+    width: 20%;
+  }
+
+  button {
+    width: 30%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}

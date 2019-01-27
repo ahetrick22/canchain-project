@@ -1,0 +1,14 @@
+nav {
+  background-color: $tertiary-color;
+  color: $primary-color;
+  margin-bottom: 10px;
+
+  .nav-welcome {
+    font-size: 1.7rem;
+    font-weight: bold;
+  }
+
+  li {
+    list-style-type: none;
+  }
+}

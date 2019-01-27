@@ -1,0 +1,80 @@
+.dashboard-page {
+  text-align: center;
+  background-color: $primary-color; 
+  color: $gray;
+  box-shadow: 2px 4px 6px 8px $gray;
+  align-items: center;
+  margin-bottom: 5%;
+  
+  button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1.4rem;
+  }
+}
+
+.dashboard-table {
+  color: $secondary-color;
+  font-family: serif;
+  font-weight: lighter;
+  width: 90%;
+  margin-left: 5%;
+
+  thead {
+    text-align: center;
+    align-items: center;
+  }
+
+  tr {
+    justify-items: center;
+  }
+
+  .count {
+    font-size: 1.4rem;
+  }
+
+}
+
+.dashboard-spinner {
+  font-size: 2.0rem;
+}
+
+%status-circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.red-circle {
+  @extend %status-circle;
+  background-color:red;
+}
+
+.green-circle {
+  @extend %status-circle;
+  background-color: green;
+}
+
+.yellow-circle {
+  @extend %status-circle;
+  background-color: yellow;
+}
+
+.verify-button {
+  background-color: $tertiary-color;
+  color: $gray;
+  padding: 5px;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px 2px $gray;
+  color: white;
+  margin: 0 10%;
+  max-width: 150px;
+}
+
+.no-delivery-alert {
+  margin-top: 75px;
+}

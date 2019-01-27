@@ -4,19 +4,21 @@ const keys = require('../config/keys');
 var crypto = require('crypto');
 
 const pool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'recycling',
-  password        : 'password',
-  database        : 'recycling-project'
+  connectionLimit : keys.SQLCONNLIMIT,
+  host            : keys.SQLHOST,
+  user            : keys.SQLUSERNAME,
+  password        : keys.SQLPASSWORD,
+  database        : keys.SQLSCHEMA
 });
 
+//builds a token for use in local storage
 const tokenForUser = user => {
   return jwt.encode({ sub: user[0].id,
     iat: Math.round(Date.now() / 1000),
     exp: Math.round(Date.now() / 1000 + 5 * 60 * 60)}, keys.TOKEN_SECRET)
 }
 
+//creates the salt and hash for a user's password
 const setPassword = password => {
   const salt = crypto.randomBytes(16).toString('hex');
   const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
@@ -49,20 +51,22 @@ exports.signup = async (req, res, next) => {
     }
   })
 
-    // If a user with username does NOT exist, create and save user record
-    await pool.query(`INSERT INTO users(
-      \`username\`, \`name\`, \`city\`,\`state\`,\`contact_full_name\`,\`account_address\`, \`account_type\`)
-      VALUES
-      ('${username}', '${centerName}', '${city}', '${state}', '${contactName}', '${accountAddress}', '${accountType}')`, async (err, user) => {
-        if (err) { return next(err) }
-        const { salt, hash } = await setPassword(password);
-        await pool.query(`UPDATE users SET \`salt\`='${salt}', \`hash\`='${hash}' WHERE \`username\`='${username}'`, async (err, result) => {
-          await pool.query(`SELECT * FROM users WHERE \`username\`='${username}'`, function(err, existingUser) {
-            if (err) { return next(err) }
-           res.json({ token: tokenForUser(existingUser) })
-        })
+  const { salt, hash } = await setPassword(password);
+  // If a user with username does NOT exist, create and save user record
+  await pool.query(`INSERT INTO users(
+    \`username\`, \`name\`, \`city\`,\`state\`,\`contact_full_name\`,\`account_address\`, \`account_type\`, \`salt\`, \`hash\`)
+    VALUES
+    ('${username}', '${centerName}', '${city}', '${state}', '${contactName}', '${accountAddress}', '${accountType}', '${salt}', '${hash}')`, async (err, user) => {
+      if (err) { 
+        return next(err) 
+      }
+      //must get the full user so that we can use the ID to create a token
+      await pool.query(`SELECT * FROM users WHERE \`username\`='${username}'`, function(err, foundUser) {
+        if (err) { 
+          return next(err) 
+        }
+       res.json({ token: tokenForUser(foundUser) })
       })
+  })
+}
 
-    })    
-
-  }

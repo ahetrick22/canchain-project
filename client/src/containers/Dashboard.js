@@ -9,6 +9,7 @@ import CenterDashboardHeader from './CenterDashboardHeader';
 import PlantDashboardHeader from './PlantDashboardHeader';
 
 //can either be a center dashboard or plant dashboard - there are few differences in conditionals
+//this component is the main one that conducts transactions with the smart contract and uses Drizzle
 class Dashboard extends Component {
   constructor(props, context) {
     super(props);
@@ -40,6 +41,7 @@ class Dashboard extends Component {
 
   //used by center only to create a new delivery
   createDelivery = async (count) => {
+    //toggle the loading state
     this.props.toggleFetch();
     //the center that is creating the delivery
     const deliveryInfo = {
@@ -67,7 +69,7 @@ class Dashboard extends Component {
     }
     await this.contract.methods.verifyDelivery(contract_id, count).send()
       .then(async (data) => {
-        //this is the discrepancy emitted from the contract
+        //this is the discrepancy emitted from the contract, which we record in the DB
         deliveryVerification.discrepancy = data.events.Discrepancy.returnValues.difference;
         this.props.verifyDelivery(deliveryVerification);
       })
@@ -148,6 +150,7 @@ const mapStateToProps = state => {
   }
 }
 
+//allows access to all the contract functionality provided by Drizzle
 Dashboard.contextTypes = {
   drizzle: PropTypes.object
 }

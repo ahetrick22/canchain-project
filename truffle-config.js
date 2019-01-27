@@ -1,3 +1,6 @@
+//sets up the configuration for Truffle suite to access correct network 
+//at some point, would want to add production network details
+
 module.exports = {
   networks: {
     development: {
