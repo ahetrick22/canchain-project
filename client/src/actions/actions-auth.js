@@ -44,7 +44,7 @@ export const login = (data, callback) => dispatch => {
 };
 
 //register a new user
-export const signup = (data, callback) => dispatch => {
+export const signup = data => dispatch => {
   fetch('/auth/signup', {
       method: 'POST',
       headers: {
@@ -60,13 +60,6 @@ export const signup = (data, callback) => dispatch => {
           payload: data
         });
         localStorage.setItem('token', data.token)
-        callback();
-      })
-      .catch(err => {
-        dispatch({
-          type: AUTH_ERROR,
-          payload: 'Error signing in'
-        });
       })
     )
 }
