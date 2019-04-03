@@ -2,7 +2,7 @@
 
 CanChain is a demo app created with the intention of using a private blockchain. A blockchain version is not currently deployed, but the off-chain demo is available hosted on Heroku [here](https://canchain.herokuapp.com).  It uses a Node/MySQL backend and a React/Redux frontend.
 
-If you'd like to run the on-chain version locally, you'll need the [Metamask](www.metamask.io) browser extension and [Ganache](https://truffleframework.com/docs/ganache/quickstart), from the [Truffle Suite](www.truffleframework.com).
+If you'd like to run the on-chain version locally, you'll need the [Metamask](https://www.metamask.io) browser extension and [Ganache](https://truffleframework.com/docs/ganache/quickstart), from the [Truffle Suite](https://www.truffleframework.com).
 
 Connect Metamask to your Ganache blockchain once you have it running and make sure that the port specified in truffle-config.js is the same one. 
 
